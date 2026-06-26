@@ -1,0 +1,211 @@
+package com.luneapp.official.ui.pages.home
+
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import com.luneapp.official.domain.menstrual.AddRecordResult
+import com.luneapp.official.domain.menstrual.CyclePhaseInfo
+import com.luneapp.official.domain.menstrual.CycleState
+import com.luneapp.official.domain.menstrual.MenstrualService
+import com.luneapp.official.ui.components.DecorShape
+import com.luneapp.official.ui.components.SmallSpacer
+import com.luneapp.official.ui.components.SuccessOverlay
+import com.luneapp.official.ui.pages.sheet.SheetViewModel
+import com.luneapp.official.ui.theme.expressiveShapes
+import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import androidx.compose.ui.res.stringResource
+import com.luneapp.official.R
+
+@Composable
+fun HomeScreen(
+    service: MenstrualService,
+    sheetViewModel: SheetViewModel,
+    settings: com.luneapp.official.domain.settings.SettingsRepository,
+    onNavigateSettings: () -> Unit,
+) {
+    val viewModel = remember { HomeViewModel(service, settings) }
+    val cycleState = viewModel.cycleState
+    val phaseInfo = viewModel.phaseInfo
+    val userStatus = viewModel.userStatus
+    val isLoading = viewModel.isLoading
+    val homeMode = viewModel.homeMode
+    val scope = rememberCoroutineScope()
+    val successMsg = stringResource(R.string.record_save_success)
+    var successMessage by remember { mutableStateOf<String?>(null) }
+    // Selected date on the detail calendar ??drives the default for "log today" when
+    // the user has tapped a recent day on the calendar before pressing the button.
+    var detailSelectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    LaunchedEffect(Unit) {
+        sheetViewModel.dataChanged.collect { viewModel.refresh() }
+    }
+
+    Box(
+        Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+            .safeDrawingPadding()
+    ) {
+        if (!isLoading && cycleState != null) {
+            Box(Modifier.fillMaxSize()) {
+                Column(Modifier.fillMaxSize()) {
+                    HomeAppBar(onNavigateSettings = onNavigateSettings)
+
+                    HomeContent(
+                        homeMode = homeMode,
+                        cycleState = cycleState,
+                        phaseInfo = phaseInfo,
+                        userStatus = userStatus,
+                        service = service,
+                        onRefresh = { viewModel.refresh() },
+                        sheetViewModel = sheetViewModel,
+                        detailSelectedDate = detailSelectedDate,
+                        onDetailSelectedDateChange = { detailSelectedDate = it },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                // -------------------------------------------------
+                // Floating bottom toolbar
+                // -------------------------------------------------
+                Box(
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 8.dp),
+                ) {
+                    BottomSection(
+                        inPeriod = cycleState.inPeriod,
+                        homeMode = homeMode,
+                        onToggleMode = { mode -> viewModel.updateHomeMode(mode) },
+                        onPeriodArrived = {
+                            scope.launch {
+                                val result = sheetViewModel.recordPeriodStart(
+                                    preferredStart = detailSelectedDate,
+                                ) ?: return@launch
+                                if (result is AddRecordResult.Success) {
+                                    viewModel.refresh(); successMessage = successMsg
+                                }
+                            }
+                        },
+                        onPeriodGone = {
+                            scope.launch {
+                                val ok = sheetViewModel.recordPeriodEnd() ?: return@launch
+                                if (ok) {
+                                    viewModel.refresh(); successMessage = successMsg
+                                }
+                            }
+                        },
+                    )
+                }
+            }
+        }
+
+        SuccessOverlay(
+            message = successMessage,
+            onDismiss = { successMessage = null },
+        )
+    }
+}
+
+@Composable
+private fun HomeAppBar(
+    onNavigateSettings: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(12.dp))
+                .clickable(onClick = onNavigateSettings)
+                .testTag("nav_settings")
+                .padding(horizontal = 8.dp, vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            DecorShape(
+                24,
+                shape = MaterialTheme.expressiveShapes.cookie7,
+                color = MaterialTheme.colorScheme.primary
+            )
+            SmallSpacer(8)
+            Text(
+                stringResource(R.string.app_name),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeContent(
+    homeMode: HomeMode,
+    cycleState: CycleState,
+    phaseInfo: CyclePhaseInfo?,
+    userStatus: com.luneapp.official.domain.settings.UserStatus,
+    service: MenstrualService,
+    onRefresh: () -> Unit,
+    sheetViewModel: SheetViewModel,
+    detailSelectedDate: LocalDate?,
+    onDetailSelectedDateChange: (LocalDate?) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    AnimatedContent(
+        targetState = homeMode,
+        modifier = modifier,
+        transitionSpec = {
+            val fromIdx = initialState.ordinal
+            val toIdx = targetState.ordinal
+            val direction = if (toIdx > fromIdx) 1 else -1
+            (fadeIn(tween(300)) + slideIn(tween(300)) { IntOffset(direction * it.width / 6, 0) })
+                .togetherWith(fadeOut(tween(200)) + slideOut(tween(200)) {
+                    IntOffset(-direction * it.width / 6, 0)
+                })
+        },
+        label = "home_mode",
+    ) { mode ->
+        when (mode) {
+            HomeMode.CALENDAR -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    HomeCalendar(
+                        state = cycleState,
+                        phaseInfo = phaseInfo,
+                        userStatus = userStatus,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                    )
+                }
+            }
+            HomeMode.DETAIL -> {
+                DetailCalendarView(
+                    cycleState = cycleState,
+                    phaseInfo = phaseInfo,
+                    service = service,
+                    onRefresh = onRefresh,
+                    selectedDate = detailSelectedDate,
+                    onSelectedDateChange = onDetailSelectedDateChange,
+                )
+            }
+            HomeMode.STATS -> {
+                HomeStatistics(
+                    cycleState = cycleState,
+                    sheetViewModel = sheetViewModel,
+                    onRefresh = onRefresh,
+                )
+            }
+        }
+    }
+}

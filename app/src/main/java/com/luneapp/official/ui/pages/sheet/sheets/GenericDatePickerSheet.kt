@@ -1,0 +1,169 @@
+package com.luneapp.official.ui.pages.sheet.sheets
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.luneapp.official.ui.components.PrimaryCta
+import com.luneapp.official.ui.components.SmallSpacer
+import io.github.adrcotfas.datetime.names.TextStyle
+import io.github.adrcotfas.datetime.names.getDisplayName
+import kotlinx.datetime.*
+import androidx.compose.ui.res.stringResource
+import com.luneapp.official.R
+import kotlin.time.Clock
+
+/**
+ * A standardized date selection sheet.
+ * Supports:
+ * - Localized title (StringResource) and optional hint
+ * - Min/Max date constraints
+ * - Default initial selection
+ * - Returns a single date
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GenericDatePickerSheet(
+    titleRes: Int,
+    hintRes: Int? = null,
+    hint: String? = null,
+    minDate: LocalDate? = null,
+    maxDate: LocalDate? = null,
+    defaultDate: LocalDate? = null,
+    onDismiss: () -> Unit,
+    onConfirm: (LocalDate) -> Unit,
+) {
+    val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+    var selected by remember { mutableStateOf<LocalDate?>(defaultDate ?: today) }
+
+    // Build the list of selectable dates (reverse chronological)
+    val dates = remember(today, minDate, maxDate) {
+        val start = maxDate ?: today
+        val end = minDate ?: today.minus(3, DateTimeUnit.MONTH)
+        buildList {
+            var d = start
+            while (d >= end) {
+                add(d)
+                d = d.minus(1, DateTimeUnit.DAY)
+            }
+        }
+    }
+
+    val resolvedHint = hint
+        ?: hintRes?.let { stringResource(it) }
+        ?: selected?.let { "${it.month.number}/${it.day}" }
+        ?: ""
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+    ) {
+        Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 24.dp)) {
+            Text(stringResource(titleRes), style = MaterialTheme.typography.titleLarge)
+            SmallSpacer(4)
+            Text(
+                resolvedHint,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            SmallSpacer(12)
+
+            LazyColumn(
+                modifier = Modifier.heightIn(max = 400.dp),
+                state = rememberLazyListState(),
+            ) {
+                items(dates, key = { it.toEpochDays() }) { date ->
+                    DatePickerListItem(
+                        date = date,
+                        today = today,
+                        isSelected = date == selected,
+                        onClick = { selected = date },
+                    )
+                }
+            }
+
+            SmallSpacer(16)
+            PrimaryCta(
+                text = stringResource(R.string.onboarding_confirm),
+                onClick = {
+                    selected?.let { onConfirm(it) }
+                },
+                enabled = selected != null,
+            )
+        }
+    }
+}
+
+@Composable
+private fun DatePickerListItem(
+    date: LocalDate,
+    today: LocalDate,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+) {
+    val isToday = date == today
+    val daysAgo = date.until(today, DateTimeUnit.DAY).toInt()
+
+    val bgColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+    else MaterialTheme.colorScheme.surface
+    val contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer
+    else MaterialTheme.colorScheme.onSurface
+
+    Surface(
+        color = bgColor,
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp)
+            .clickable(onClick = onClick),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                formatDateDisplay(date),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = if (isToday || isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                color = contentColor,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                when {
+                    isToday -> stringResource(R.string.legend_today)
+                    daysAgo == 1 -> stringResource(R.string.date_yesterday)
+                    daysAgo > 0 -> stringResource(R.string.date_n_days_ago, daysAgo)
+                    else -> ""
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = if (isSelected) contentColor.copy(alpha = 0.7f)
+                else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (isSelected) {
+                Icon(
+                    Icons.Default.Check,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
+        }
+    }
+}
+
+private fun formatDateDisplay(date: LocalDate): String {
+    val weekday = date.dayOfWeek.getDisplayName(TextStyle.SHORT)
+    return "${date.month.number}/${date.day} $weekday"
+}

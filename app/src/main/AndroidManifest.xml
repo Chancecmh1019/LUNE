@@ -39,7 +39,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Health Connect rationale (Android 14+) — without this, the permission
+        <!-- Health Connect rationale (Android 14+) - without this, the permission
              dialog refuses to show: "App should support rationale intent, finishing!" -->
         <activity-alias
                 android:name="ViewPermissionUsageActivity"
@@ -56,7 +56,7 @@
                 android:name=".notifications.ReminderReceiver"
                 android:exported="false">
             <intent-filter>
-                <action android:name="com.lune.app.ACTION_REMINDER"/>
+                <action android:name="com.luneapp.official.ACTION_REMINDER"/>
             </intent-filter>
         </receiver>
 

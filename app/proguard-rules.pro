@@ -26,7 +26,7 @@
 -dontwarn me.tatarka.inject.**
 
 # Keep AppComponent and generated implementations
--keep class com.lune.app.di.** { *; }
+-keep class com.luneapp.official.di.** { *; }
 
 # Firebase / Crashlytics
 -keepattributes SourceFile,LineNumberTable

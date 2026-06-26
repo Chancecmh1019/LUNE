@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.lune.app"
+    namespace = "com.luneapp.official"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.lune.app"
+        applicationId = "com.luneapp.official"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull()
