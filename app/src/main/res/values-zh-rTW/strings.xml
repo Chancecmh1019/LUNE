@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">LUNE</string>
+    <string name="disclaimer_title">隱私與非醫療免責聲明</string>
+    <string name="disclaimer_body">本應用程式僅在您的裝置本機儲存資料，不會上傳或分享任何資訊。\n\n僅用於教育與計畫參考，不構成醫療建議。\n\n請勿將其用於診斷或治療。\n\n\n繼續使用即表示您已閱讀並接受以上條款。</string>
+    <string name="disclaimer_accept">我已理解</string>
+    <string name="settings_title">設定</string>
+    <string name="settings_language">語言</string>
+    <!-- Navigation -->
+    <!-- Home Screen -->
+    <string name="unit_days">天</string>
+    <string name="btn_record_period">月經來了？</string>
+    <!-- Home — in period state -->
+    <string name="home_in_period">經期中</string>
+    <string name="home_day_n">第 %1$d 天</string>
+    <string name="home_hero_due_today">今天月經預計會來</string>
+    <string name="home_cycle_calendar">週期日曆</string>
+    <string name="legend_period">經期</string>
+    <string name="legend_predicted">預測</string>
+    <string name="legend_today">今天</string>
+    <string name="home_end_period">月經結束了嗎？</string>
+    <!-- Home — not in period states -->
+    <string name="home_backfill_to_predict">補錄更多，開始預測</string>
+    <!-- Snackbar messages -->
+    <string name="record_save_success">紀錄成功</string>
+    <!-- Calendar / History Screen -->
+    <string name="history_in_progress">進行中</string>
+    <string name="history_view_all">查看全部 %1$d 筆紀錄 →</string>
+    <!-- Record Today Dialog -->
+    <string name="record_dialog_title">紀錄今天</string>
+    <string name="record_date_title">紀錄 %1$d月%2$d日</string>
+    <string name="record_flow_intensity">經血量</string>
+    <string name="intensity_light">少量</string>
+    <string name="intensity_medium">中量</string>
+    <string name="intensity_heavy">多量</string>
+    <string name="record_mood">今日心情</string>
+    <string name="mood_happy">開心</string>
+    <string name="mood_neutral">普通</string>
+    <string name="mood_sad">低落</string>
+    <string name="mood_very_sad">難受</string>
+    <string name="record_symptoms">身體症狀</string>
+    <string name="symptom_cramps">經痛（腹痛）</string>
+    <string name="symptom_back_pain">腰痠</string>
+    <string name="symptom_headache">頭痛</string>
+    <string name="symptom_breast_pain">胸部脹痛</string>
+    <string name="symptom_fatigue">疲倦</string>
+    <string name="symptom_hot_flash">潮熱</string>
+    <string name="symptom_pelvic_pain">骨盆疼痛</string>
+    <string name="symptom_nausea">噁心</string>
+    <string name="symptom_bloating">脹氣</string>
+    <string name="symptom_joint_pain">關節痛</string>
+    <string name="symptom_night_sweats">盜汗</string>
+    <string name="symptom_vaginal_dryness">陰道乾澀</string>
+    <string name="symptom_insomnia">失眠</string>
+    <string name="symptom_mood_swings">情緒起伏</string>
+    <string name="record_medications">用藥</string>
+    <string name="record_medications_hint">例如：泰莫西芬 20mg，止痛藥...</string>
+    <string name="record_clinical_notes">臨床備註</string>
+    <string name="record_clinical_notes_hint">檢驗結果、醫生建議...</string>
+    <string name="record_notes_label">一般備註</string>
+    <string name="record_notes_hint">寫下今天的心情...</string>
+    <string name="record_bleeding_type">出血特徵</string>
+    <string name="bleeding_normal">正常</string>
+    <string name="bleeding_spotting">經間期出血（點滴出血）</string>
+    <string name="bleeding_abnormal">異常大量出血</string>
+    <string name="record_save_btn">儲存紀錄</string>
+    <string name="record_start_date">經期開始日期</string>
+    <string name="record_end_date">經期結束日期</string>
+    <string name="dialog_confirm">確定</string>
+    <string name="dialog_cancel">取消</string>
+    <!-- Start / End Period Sheets -->
+    <string name="start_period_question">什麼時候開始的？</string>
+    <string name="start_period_hint">選擇經期開始日期</string>
+    <string name="end_period_question">什麼時候結束的？</string>
+    <string name="edit_start_date">修改開始日期</string>
+    <string name="edit_end_date">修改結束日期</string>
+    <string name="date_yesterday">昨天</string>
+    <string name="date_n_days_ago">%1$d 天前</string>
+    <!-- Backfill -->
+    <string name="day_picker_title">選擇日期</string>
+    <string name="day_picker_hint">選擇要補充紀錄的日期</string>
+    <string name="day_picker_recorded">已紀錄</string>
+    <!-- Record Detail Sheet -->
+    <string name="detail_delete">刪除此紀錄</string>
+    <string name="detail_delete_title">確認刪除</string>
+    <string name="detail_delete_body">刪除後無法復原，確定要刪除這條經期記錄嗎？</string>
+    <string name="detail_delete_confirm">刪除</string>
+    <!-- Onboarding -->
+    <string name="onboarding_welcome">在開始使用前，我們需要您回答幾個問題，以幫助我們更好地了解您的月經週期。\n\n\n請放心，您的資料只會儲存於本地，並且可以在任何時間被完全刪除。</string>
+    <string name="onboarding_all_set">準備就緒！</string>
+    <string name="onboarding_get_started">開始使用</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_continue">繼續</string>
+    <string name="onboarding_skip">暫時跳過</string>
+    <string name="onboarding_step_indicator">第 %1$d / %2$d 步</string>
+    <string name="onboarding_adjust">調整</string>
+    <string name="onboarding_confirm">確認</string>
+    <string name="onboarding_cycle_settings_title">關於您的週期</string>
+    <string name="onboarding_cycle_settings_hint">設定經期持續天數和月經週期長度，之後可以在設定中修改。</string>
+    <string name="onboarding_period_duration_label">經期持續天數</string>
+    <string name="onboarding_cycle_length_label">月經週期</string>
+    <string name="onboarding_all_set_hint_simple">經期已紀錄，預測功能已開啟。</string>
+    <string name="onboarding_all_set_hint_imported">已匯入 %1$d 個週期，預測功能已開啟。</string>
+    <string name="onboarding_back">返回</string>
+    <string name="onboarding_save">儲存</string>
+    <!-- Onboarding — 健康同步 -->
+    <string name="onboarding_health_title">從健康同步</string>
+    <string name="onboarding_health_desc">從 Apple 健康或 Google 健康互聯匯入已有的經期紀錄，立即獲得預測。所有資料始終儲存在本機。</string>
+    <string name="onboarding_health_connect">立即連接</string>
+    <string name="onboarding_health_syncing">連接中…</string>
+    <string name="onboarding_health_imported">已匯入 %1$d 筆紀錄</string>
+    <string name="onboarding_health_imported_one">已匯入 1 筆紀錄</string>
+    <string name="onboarding_health_no_records">健康資料庫中未找到紀錄</string>
+    <string name="onboarding_health_failed">連接失敗。請在系統彈出視窗中勾選並允許存取月經資料。</string>
+    <string name="onboarding_health_retry">重試</string>
+    <string name="onboarding_restore_json">從本機備份還原 (JSON)</string>
+    <!-- Onboarding — 通知 -->
+    <string name="onboarding_notifications_title">溫柔的提醒</string>
+    <string name="onboarding_notifications_desc">在經期和排卵期前提前提醒您。打開您需要的項目即可，之後可在「設定」裡微調。</string>
+    <!-- Onboarding — 合成資料提示 -->
+    <string name="onboarding_synthetic_hint">為了讓預測立刻可用，我們會基於以上設定生成幾個過往週期。您可以隨時查看並修改它們。</string>
+    <!-- Onboarding — 當前狀態 -->
+    <string name="onboarding_status_title">您現在的狀態是？</string>
+    <string name="onboarding_status_subtitle">選擇最符合您當下情況的選項。</string>
+    <string name="onboarding_status_active_title">我正在經期</string>
+    <string name="onboarding_status_active_subtitle">我們會按進行中的經期記錄。</string>
+    <string name="onboarding_status_ended_title">上一次月經已經結束</string>
+    <string name="onboarding_status_ended_subtitle">選擇起止日期。</string>
+    <string name="onboarding_status_unsure_title">暫時不確定</string>
+    <string name="onboarding_status_unsure_subtitle">先跳過 — 之後可以在首頁隨時紀錄。</string>
+    <string name="onboarding_status_simple_title">您現在正在經期嗎？</string>
+    <string name="onboarding_status_simple_subtitle">歷史紀錄已經匯入，只需告訴我們今天的情況。</string>
+    <string name="onboarding_status_simple_no_title">暫時沒有</string>
+    <string name="onboarding_status_simple_no_subtitle">用已匯入的歷史進行預測。</string>
+    <string name="onboarding_status_active_start_label">開始於</string>
+    <string name="onboarding_status_ended_start_label">開始於</string>
+    <string name="onboarding_status_ended_end_label">結束於</string>
+    <string name="onboarding_status_pick_date">選擇日期</string>
+    <string name="onboarding_status_pick_start">選擇開始日期</string>
+    <string name="onboarding_status_pick_end">選擇結束日期</string>
+    <string name="onboarding_status_unsure_hint">我們會使用預設的週期設定幫您啟動，之後可以隨時調整。</string>
+    <string name="onboarding_status_imported_chip">已匯入 %1$d 筆紀錄</string>
+    <string name="onboarding_status_auto_detected">從您的健康記錄中檢測到正在進行的經期。</string>
+    
+    <!-- Onboarding — 健康狀態 (Medical Condition) -->
+    <string name="onboarding_status_health_title">您的健康狀況</string>
+    <string name="onboarding_status_health_subtitle">這能幫助我們提供更合適的追蹤與分析建議。</string>
+    <string name="user_status_regular">規律週期</string>
+    <string name="user_status_regular_desc">沒有影響週期規律的已知疾病或情況。</string>
+    <string name="user_status_postpartum">產後 / 哺乳期</string>
+    <string name="user_status_postpartum_desc">週期恢復前可能會經歷較長時間的無月經期。</string>
+    <string name="user_status_oncology_tamoxifen">抗雌激素治療</string>
+    <string name="user_status_oncology_tamoxifen_desc">選擇性雌激素受體調節劑。需密切關注異常子宮出血。</string>
+    <string name="user_status_oncology_other">長期特殊用藥</string>
+    <string name="user_status_oncology_other_desc">化療、芳香環轉化酶抑制劑或卵巢功能抑制等。</string>
+    <string name="user_status_pcos">多囊性卵巢症候群 (PCOS)</string>
+    <string name="user_status_pcos_desc">常導致月經不規律或無月經。</string>
+    <string name="user_status_tracking_mode">追蹤模式</string>
+    <string name="user_status_tracking_mode_short">追蹤模式</string>
+    <string name="user_status_endometriosis">子宮內膜異位症</string>
+    <string name="user_status_endometriosis_desc">可能導致嚴重的骨盆疼痛或大量出血。</string>
+    <string name="user_status_hormonal_contraception">荷爾蒙避孕</string>
+    <string name="user_status_hormonal_contraception_desc">避孕藥、避孕環、植入物或注射劑（出血屬戒斷性出血）。</string>
+    <string name="user_status_thyroid">甲狀腺疾病</string>
+    <string name="user_status_thyroid_desc">甲狀腺功能低下或亢進可能導致週期異常。</string>
+    <string name="user_status_perimenopause">圍絕經期（更年期前期）</string>
+    <string name="user_status_perimenopause_desc">荷爾蒙波動大，正處於向停經過渡的階段。</string>
+    <string name="user_status_other">其他情況</string>
+    <string name="user_status_other_desc">其他會影響週期規律的情況。</string>
+
+    <!-- Statistics Screen -->
+    <string name="stats_empty_message">記錄至少 2 次月經，即可查看統計資料</string>
+    <string name="stats_avg_section_title">最近 %1$d 個週期的平均值</string>
+    <string name="stats_period_days">經期長度</string>
+    <string name="stats_cycle_days">週期長度</string>
+    <string name="stats_chart_title">週期（天）</string>
+    <string name="stats_legend_actual">實際的天數</string>
+    <string name="stats_legend_predicted">預測的天數</string>
+    <string name="stats_history_title">週期歷史</string>
+    <!-- Settings Screen -->
+    <string name="app_version">版本 %1$s</string>
+    <string name="settings_display_mode">顯示模式</string>
+    <string name="settings_mode_system">跟隨系統</string>
+    <string name="settings_mode_light">淺色</string>
+    <string name="settings_mode_dark">深色</string>
+    <string name="settings_period_duration">經期持續天數</string>
+    <string name="settings_cycle_length">月經週期</string>
+    <string name="settings_export">匯出報告</string>
+    <string name="settings_export_value">分享為長圖</string>
+    <string name="export_dialog_title">分享長圖</string>
+    <string name="export_dialog_body">選擇報告使用的語言，產生的長圖會在系統分享選單中開啟，可以直接傳送或儲存至相簿。</string>
+    <string name="export_lang_english">English</string>
+    <string name="export_lang_chinese">中文</string>
+    <string name="export_button">匯出</string>
+    <string name="export_in_progress">正在匯出…</string>
+    <string name="export_success_title">分享選單已打開</string>
+    <string name="export_success_body">在分享選單裡選擇目的地即可發送或儲存長圖。</string>
+    <string name="export_failure_title">匯出失敗</string>
+    <string name="export_failure_body">無法儲存報告：%1$s</string>
+    <string name="export_no_data">暫無可匯出的紀錄。</string>
+    <string name="export_range_label">時間範圍</string>
+    <string name="export_range_3m">最近 3 個月</string>
+    <string name="export_range_6m">最近 6 個月</string>
+    <string name="export_range_1y">最近 1 年</string>
+    <string name="export_range_all">全部紀錄</string>
+    <string name="export_range_custom">自訂範圍</string>
+    <string name="export_range_from">起始日期</string>
+    <string name="export_range_to">結束日期</string>
+    <string name="export_range_pick">選擇日期</string>
+    
+    <!-- Backup/Restore -->
+    <string name="settings_backup_title">資料備份</string>
+    <string name="settings_backup_export">匯出至 JSON</string>
+    <string name="settings_backup_export_desc">應用程式備份成您的紀錄檔</string>
+    <string name="settings_backup_import">從 JSON 匯入</string>
+    <string name="settings_backup_import_desc">從本機備份檔還原您的紀錄</string>
+    <string name="settings_backup_export_success">匯出成功</string>
+    
+    <string name="settings_clear_data">清除所有資料</string>
+    <string name="settings_clear_data_value">重新開始</string>
+    <string name="settings_clear_title">確認清除</string>
+    <string name="settings_clear_body">這將刪除所有經期紀錄並重新開始引導。此操作無法撤銷。</string>
+    <string name="settings_about">關於我們</string>
+    <string name="settings_about_org">LUNE</string>
+    <string name="settings_made_by">Made By Chancecmh1019</string>
+    <string name="splash_built_by">Made By Chancecmh1019</string>
+    <string name="calendar_month_label">%1$d月</string>
+    
+    <!-- Months -->
+    <string name="month_january">一月</string>
+    <string name="month_february">二月</string>
+    <string name="month_march">三月</string>
+    <string name="month_april">四月</string>
+    <string name="month_may">五月</string>
+    <string name="month_june">六月</string>
+    <string name="month_july">七月</string>
+    <string name="month_august">八月</string>
+    <string name="month_september">九月</string>
+    <string name="month_october">十月</string>
+    <string name="month_november">十一月</string>
+    <string name="month_december">十二月</string>
+
+    <string name="month_short_jan">1月</string>
+    <string name="month_short_feb">2月</string>
+    <string name="month_short_mar">3月</string>
+    <string name="month_short_apr">4月</string>
+    <string name="month_short_may">5月</string>
+    <string name="month_short_jun">6月</string>
+    <string name="month_short_jul">7月</string>
+    <string name="month_short_aug">8月</string>
+    <string name="month_short_sep">9月</string>
+    <string name="month_short_oct">10月</string>
+    <string name="month_short_nov">11月</string>
+    <string name="month_short_dec">12月</string>
+
+    <!-- Weekday labels -->
+    <string name="weekday_short_mon">一</string>
+    <string name="weekday_short_tue">二</string>
+    <string name="weekday_short_wed">三</string>
+    <string name="weekday_short_thu">四</string>
+    <string name="weekday_short_fri">五</string>
+    <string name="weekday_short_sat">六</string>
+    <string name="weekday_short_sun">日</string>
+    
+    <!-- Cycle phases -->
+    <string name="detail_ovulation">排卵期</string>
+    <string name="detail_delete_period">刪除經期</string>
+    <string name="detail_shorten_period">經期到此結束</string>
+    <string name="detail_extend_period">延長經期</string>
+    <string name="detail_add_period">添加經期</string>
+    <string name="detail_no_selection">點擊日期查看詳情</string>
+    <string name="detail_cycle_status">週期狀況</string>
+    <string name="detail_current_phase">當前階段</string>
+    <string name="detail_tips">小提示</string>
+    <string name="detail_notes">備註</string>
+    <string name="detail_notes_hint">記錄藥物、症狀或其他備忘…</string>
+    <string name="detail_ovulation_day">排卵日</string>
+    <string name="phase_menstrual">經期</string>
+    <string name="phase_follicular">濾泡期</string>
+    <string name="phase_ovulation">排卵期</string>
+    <string name="phase_luteal">黃體期</string>
+    <string name="home_current_phase">當前階段</string>
+    <string name="home_last_period">上次月經</string>
+    <string name="home_next_period_starts">預計下個經期開始</string>
+    <string name="home_day_in_cycle">第 %1$d 天 / 共 %2$d 天</string>
+    <string name="phase_menstrual_desc">子宮內膜剝落，注意休息保暖。</string>
+    <string name="phase_follicular_desc">身體為排卵做準備，精力逐漸恢復。</string>
+    <string name="phase_ovulation_desc">卵子釋放，受孕機率最高。</string>
+    <string name="phase_luteal_desc">排卵後階段，可能出現經前症候群（PMS）。</string>
+    <string name="phase_menstrual_desc_day1">第1天 — 流量通常最大，注意休息保暖，別勉強自己。</string>
+    <string name="phase_menstrual_desc_day2">第2天 — 經痛可能加重，熱敷或輕柔伸展會舒服很多。</string>
+    <string name="phase_menstrual_desc_day3">第3天 — 流量減緩，多喝溫水，避免勞累。</string>
+    <string name="phase_menstrual_desc_day4">第4天 — 精力逐漸恢復，多吃含鐵食物有助修復。</string>
+    <string name="phase_menstrual_desc_day5_plus">尾期 — 少量點滴屬正常，傾聽身體的聲音。</string>
+    <string name="phase_follicular_desc_early">濾泡期前段 — 精力回升，適合開啟新計畫。</string>
+    <string name="phase_follicular_desc_mid">濾泡期中段 — 思路清晰、效率較高，好好利用。</string>
+    <string name="phase_follicular_desc_late">濾泡期後段 — 臨近排卵期，子宮頸黏液可能增多。</string>
+    <string name="phase_ovulation_desc_early">受孕窗口開啟 — 受孕機率開始上升。</string>
+    <string name="phase_ovulation_desc_mid">排卵高峰 — 此時受孕機率最大。</string>
+    <string name="phase_ovulation_desc_late">排卵尾聲 — 受孕窗口即將關閉。</string>
+    <string name="phase_luteal_desc_early">黃體期前段 — 狀態平穩，可能出現輕微經前徵兆。</string>
+    <string name="phase_luteal_desc_mid">黃體期中段 — 情緒起伏或食慾變化常見，多關心自己。</string>
+    <string name="phase_luteal_desc_late">黃體期後段 — 月經將至，注意休息和補水。</string>
+    <string name="phase_now">當前</string>
+    <string name="phase_in_days">%1$d 天後</string>
+    <string name="anomaly_short_cycle_title">週期異常過短</string>
+    <string name="anomaly_short_cycle_body">兩次月經間隔不到14天。這可能是排卵期少量出血或內分泌波動，建議諮詢醫生。此資料不會計入平均週期計算。</string>
+    <!-- Notifications -->
+    <string name="settings_notifications">通知</string>
+    <string name="settings_notifications_value">提醒設定</string>
+    <string name="notifications_title">通知</string>
+    <string name="notifications_description">提醒僅會安排在本機，不會上傳到任何伺服器。</string>
+    <string name="notifications_period_title">經期前提醒</string>
+    <string name="notifications_ovulation_title">排卵期前提醒</string>
+    <string name="notifications_daily_title">每日報告</string>
+    <string name="notifications_off">關閉</string>
+    <string name="notifications_day_before">提前 1 天</string>
+    <string name="notifications_days_before">提前 %1$d 天</string>
+    <string name="notifications_at_time">每天 %1$d:%2$s</string>
+    <string name="notifications_adjust">調整</string>
+    <string name="notifications_daily_time">每日報告時間</string>
+    <string name="notifications_permission_required">需要通知權限</string>
+    <string name="notifications_permission_hint">點擊以允許傳送提醒通知。</string>
+    <!-- Health Data Sync -->
+    <string name="settings_health_data">健康資料</string>
+    <string name="settings_health_sync">同步健康資料</string>
+    <string name="settings_health_sync_desc">與 Apple 健康或 Google 健康互聯同步經期紀錄</string>
+    <string name="settings_health_sync_now">立即同步</string>
+    <string name="settings_health_syncing">同步中…</string>
+    <string name="settings_health_last_sync">上次同步：%1$s</string>
+    <string name="settings_health_never_synced">尚未同步</string>
+    <string name="settings_health_not_available">此設備不支援健康資料</string>
+    <string name="settings_health_not_authorized">需要授權才能同步健康資料</string>
+    <!-- Notification payload copy -->
+    <string name="notif_period_title">月經快來了</string>
+    <string name="notif_period_body">預計還有 %1$d 天開始下次月經，記得提前準備哦。</string>
+    <string name="notif_ovulation_title">排卵期即將到來</string>
+    <string name="notif_ovulation_body">大約 %1$d 天後進入排卵窗口期。</string>
+    <string name="notif_daily_title">每日週期提醒</string>
+    <string name="notif_daily_body">打開應用程式查看今天的週期階段，紀錄一下您的感受吧。</string>
+</resources>

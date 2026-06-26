@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUNE - Menstrual Health Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">LUNE</a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link" data-en="Features" data-zh="功能">Features</a>
+                <a href="#privacy" class="nav-link" data-en="Privacy" data-zh="隱私">Privacy</a>
+                <a href="#about" class="nav-link" data-en="About" data-zh="關於">About</a>
+                <button class="lang-switch" onclick="toggleLanguage()">
+                    <span class="lang-text">繁體中文</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="hero-content fade-in">
+            <h1 class="hero-title" data-en="Take Control of Your Cycle" data-zh="掌握妳的週期節奏">Take Control of Your Cycle</h1>
+            <p class="hero-subtitle" data-en="Private, precise, personal menstrual health tracking that stays on your device" data-zh="隱私至上、精準預測、全面記錄的月經健康追蹤，所有資料僅存於您的裝置">Private, precise, personal menstrual health tracking that stays on your device</p>
+            <div class="hero-cta">
+                <a href="#features" class="btn-primary" data-en="Discover LUNE" data-zh="探索 LUNE">Discover LUNE</a>
+                <a href="privacy.html" class="btn-secondary" data-en="Privacy Policy" data-zh="隱私權政策">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="phone-mockup"></div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2 class="section-title" data-en="Designed for Your Well-being" data-zh="為妳的健康而設計">Designed for Your Well-being</h2>
+            <p class="section-subtitle" data-en="Comprehensive cycle tracking with medical-grade precision" data-zh="醫療級精準度的全方位週期追蹤">Comprehensive cycle tracking with medical-grade precision</p>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card" data-delay="0">
+                <div class="feature-icon">◐</div>
+                <h3 class="feature-title" data-en="Cycle Prediction" data-zh="週期預測">Cycle Prediction</h3>
+                <p class="feature-desc" data-en="Advanced algorithms predict your next period and ovulation window with scientific accuracy, helping you plan ahead with confidence." data-zh="採用先進演算法預測下次月經與排卵期，以科學精準度協助您提前規劃，讓生活更從容自信。">Advanced algorithms predict your next period and ovulation window with scientific accuracy, helping you plan ahead with confidence.</p>
+            </div>
+
+            <div class="feature-card" data-delay="100">
+                <div class="feature-icon">◱</div>
+                <h3 class="feature-title" data-en="Health Insights" data-zh="健康洞察">Health Insights</h3>
+                <p class="feature-desc" data-en="Track symptoms, mood patterns, and physical changes throughout your cycle. Understand the relationship between your body and hormonal phases." data-zh="追蹤症狀、情緒模式與身體變化。深入理解您的身體與荷爾蒙週期之間的關聯，掌握每個階段的特徵。">Track symptoms, mood patterns, and physical changes throughout your cycle. Understand the relationship between your body and hormonal phases.</p>
+            </div>
+
+            <div class="feature-card" data-delay="200">
+                <div class="feature-icon">◧</div>
+                <h3 class="feature-title" data-en="Medical Support" data-zh="醫療支援">Medical Support</h3>
+                <p class="feature-desc" data-en="Designed for individuals undergoing hormonal therapy, managing PCOS, endometriosis, or navigating perimenopause with specialized tracking modes." data-zh="專為荷爾蒙治療、多囊性卵巢症候群、子宮內膜異位症或圍絕經期等特殊健康狀況設計的追蹤模式。">Designed for individuals undergoing hormonal therapy, managing PCOS, endometriosis, or navigating perimenopause with specialized tracking modes.</p>
+            </div>
+
+            <div class="feature-card" data-delay="300">
+                <div class="feature-icon">⬒</div>
+                <h3 class="feature-title" data-en="Data Privacy" data-zh="資料隱私">Data Privacy</h3>
+                <p class="feature-desc" data-en="Your data never leaves your device. No cloud sync, no third-party access, no tracking. Complete control over your sensitive health information." data-zh="您的資料永不離開裝置。無雲端同步、無第三方存取、無追蹤機制。您完全掌控敏感健康資訊的所有權。">Your data never leaves your device. No cloud sync, no third-party access, no tracking. Complete control over your sensitive health information.</p>
+            </div>
+
+            <div class="feature-card" data-delay="400">
+                <div class="feature-icon">◪</div>
+                <h3 class="feature-title" data-en="Health Integration" data-zh="健康整合">Health Integration</h3>
+                <p class="feature-desc" data-en="Seamlessly sync with Apple Health and Google Health Connect. Import existing records instantly without manual data entry." data-zh="無縫連接 Apple 健康與 Google 健康互聯。即時匯入既有記錄，無需手動輸入資料。">Seamlessly sync with Apple Health and Google Health Connect. Import existing records instantly without manual data entry.</p>
+            </div>
+
+            <div class="feature-card" data-delay="500">
+                <div class="feature-icon">◨</div>
+                <h3 class="feature-title" data-en="Export Reports" data-zh="報告匯出">Export Reports</h3>
+                <p class="feature-desc" data-en="Generate comprehensive health reports for medical consultations. Share detailed cycle history with your healthcare provider in multiple formats." data-zh="產生完整健康報告供醫療諮詢使用。以多種格式與您的醫療照護提供者分享詳細週期歷史。">Generate comprehensive health reports for medical consultations. Share detailed cycle history with your healthcare provider in multiple formats.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="privacy" class="privacy-highlight">
+        <div class="privacy-content">
+            <h2 class="section-title" data-en="Your Privacy is Non-negotiable" data-zh="您的隱私不容妥協">Your Privacy is Non-negotiable</h2>
+            <p class="privacy-text" data-en="LUNE operates entirely on your device. We do not collect, transmit, or store your personal health data on external servers. No analytics, no advertising networks, no data mining. Your menstrual health information remains exclusively yours." data-zh="LUNE 完全運作於您的裝置上。我們不會收集、傳輸或儲存您的個人健康資料至外部伺服器。無數據分析、無廣告網路、無資料探勘。您的月經健康資訊永遠專屬於您。">
+                LUNE operates entirely on your device. We do not collect, transmit, or store your personal health data on external servers. No analytics, no advertising networks, no data mining. Your menstrual health information remains exclusively yours.
+            </p>
+            <div class="privacy-links">
+                <a href="privacy.html" class="link-underline" data-en="Full Privacy Policy" data-zh="完整隱私權政策">Full Privacy Policy</a>
+                <a href="data-safety.html" class="link-underline" data-en="Data Safety Details" data-zh="資料安全詳情">Data Safety Details</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2 class="section-title" data-en="Built with Care" data-zh="用心打造">Built with Care</h2>
+            <p class="about-text" data-en="LUNE was created to address the lack of privacy-respecting menstrual tracking applications. Designed for individuals who need reliable cycle tracking without compromising their personal data, LUNE provides medical-grade features while maintaining absolute privacy standards." data-zh="LUNE 的誕生源於市場上缺乏尊重隱私的月經追蹤應用程式。專為需要可靠週期追蹤而不願犧牲個人資料的使用者設計，LUNE 在維持絕對隱私標準的同時，提供醫療級功能。">
+                LUNE was created to address the lack of privacy-respecting menstrual tracking applications. Designed for individuals who need reliable cycle tracking without compromising their personal data, LUNE provides medical-grade features while maintaining absolute privacy standards.
+            </p>
+            <p class="about-text" data-en="Whether you're managing a regular cycle, navigating hormonal treatments, or seeking to understand your body better, LUNE offers the tools you need without the surveillance you don't." data-zh="無論您是管理規律週期、正在進行荷爾蒙治療，或是希望更了解自己的身體，LUNE 都能提供您所需的工具，而不會帶來您不需要的監控。">
+                Whether you're managing a regular cycle, navigating hormonal treatments, or seeking to understand your body better, LUNE offers the tools you need without the surveillance you don't.
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4 class="footer-title">LUNE</h4>
+                <p class="footer-text" data-en="Private menstrual health tracking" data-zh="隱私至上的月經健康追蹤">Private menstrual health tracking</p>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title" data-en="Legal" data-zh="法律資訊">Legal</h4>
+                <a href="privacy.html" class="footer-link" data-en="Privacy Policy" data-zh="隱私權政策">Privacy Policy</a>
+                <a href="data-safety.html" class="footer-link" data-en="Data Safety" data-zh="資料安全">Data Safety</a>
+            </div>
+            <div class="footer-section">
+                <h4 class="footer-title" data-en="Contact" data-zh="聯絡">Contact</h4>
+                <a href="mailto:waitamin.studio@gmail.com" class="footer-link">waitamin.studio@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Made by Chancecmh1019</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

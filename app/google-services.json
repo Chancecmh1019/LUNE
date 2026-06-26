@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "295557286547",
+    "project_id": "lune-studio",
+    "storage_bucket": "lune-studio.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295557286547:android:7a8b5a60efab1187771b66",
+        "android_client_info": {
+          "package_name": "com.lune.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGGBad_B_sC8TJH8vW3DfwvRB74yjKi_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="app_name">LUNE</string>
+    <string name="disclaimer_title">Privacy &amp; Non-medical Disclaimer</string>
+    <string name="disclaimer_body">This app stores data locally on your device and does not send it anywhere.\n\nIt is for educational and planning purposes only and does not provide medical advice.\n\nDo not rely on it for diagnosis or treatment.\n\n\nBy continuing, you acknowledge and accept these terms.</string>
+    <string name="disclaimer_accept">I understand</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <!-- Navigation -->
+    <!-- Home Screen -->
+    <string name="unit_days">days</string>
+    <string name="btn_record_period">Period Arrived?</string>
+    <!-- Home ??in period state -->
+    <string name="home_in_period">In period</string>
+    <string name="home_day_n">Day %1$d</string>
+    <string name="home_hero_due_today">Period is due today</string>
+    <string name="home_cycle_calendar">Cycle Calendar</string>
+    <string name="legend_period">Period</string>
+    <string name="legend_predicted">Predicted</string>
+    <string name="legend_today">Today</string>
+    <string name="home_end_period">Period Gone?</string>
+    <!-- Home ??not in period states -->
+    <string name="home_backfill_to_predict">Backfill more to enable predictions</string>
+    <!-- Snackbar messages -->
+    <string name="record_save_success">Recorded successfully</string>
+    <!-- Calendar / History Screen -->
+    <string name="history_in_progress">In progress</string>
+    <string name="history_view_all">View all %1$d records ...</string>
+    <!-- Record Today Dialog -->
+    <string name="record_dialog_title">Log Today</string>
+    <string name="record_date_title">Log %1$d/%2$d</string>
+    <string name="record_flow_intensity">Flow Intensity</string>
+    <string name="intensity_light">Light</string>
+    <string name="intensity_medium">Medium</string>
+    <string name="intensity_heavy">Heavy</string>
+    <string name="record_mood">Mood Today</string>
+    <string name="mood_happy">Happy</string>
+    <string name="mood_neutral">Neutral</string>
+    <string name="mood_sad">Low</string>
+    <string name="mood_very_sad">Bad</string>
+    <string name="record_symptoms">Symptoms</string>
+    <string name="symptom_cramps">Cramps</string>
+    <string name="symptom_back_pain">Back pain</string>
+    <string name="symptom_headache">Headache</string>
+    <string name="symptom_breast_pain">Breast pain</string>
+    <string name="symptom_fatigue">Fatigue</string>
+    <string name="symptom_hot_flash">Hot flashes</string>
+    <string name="symptom_pelvic_pain">Pelvic pain</string>
+    <string name="symptom_nausea">Nausea</string>
+    <string name="symptom_bloating">Bloating</string>
+    <string name="symptom_joint_pain">Joint pain</string>
+    <string name="symptom_night_sweats">Night sweats</string>
+    <string name="symptom_vaginal_dryness">Vaginal dryness</string>
+    <string name="symptom_insomnia">Insomnia</string>
+    <string name="symptom_mood_swings">Mood swings</string>
+    <string name="record_medications">Medications</string>
+    <string name="record_medications_hint">E.g., Tamoxifen 20mg, NSAIDs...</string>
+    <string name="record_clinical_notes">Clinical Notes</string>
+    <string name="record_clinical_notes_hint">Lab results, clinician remarks...</string>
+    <string name="record_notes_label">General Notes</string>
+    <string name="record_notes_hint">Write about your day...</string>
+    <string name="record_bleeding_type">Bleeding Character</string>
+    <string name="bleeding_normal">Normal</string>
+    <string name="bleeding_spotting">Spotting</string>
+    <string name="bleeding_abnormal">Heavy/Abnormal</string>
+    <string name="record_save_btn">Save Record</string>
+    <string name="record_start_date">Period Start Date</string>
+    <string name="record_end_date">Period End Date</string>
+    <string name="dialog_confirm">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <!-- Start / End Period Sheets -->
+    <string name="start_period_question">When did it start?</string>
+    <string name="start_period_hint">Select the start date</string>
+    <string name="end_period_question">When did it end?</string>
+    <string name="edit_start_date">Edit Start Date</string>
+    <string name="edit_end_date">Edit End Date</string>
+    <string name="date_yesterday">Yesterday</string>
+    <string name="date_n_days_ago">%1$d days ago</string>
+    <!-- Backfill -->
+    <string name="day_picker_title">Select Date</string>
+    <string name="day_picker_hint">Select a date to add a record</string>
+    <string name="day_picker_recorded">Recorded</string>
+    <!-- Record Detail Sheet -->
+    <string name="detail_delete">Delete this record</string>
+    <string name="detail_delete_title">Confirm Delete</string>
+    <string name="detail_delete_body">This cannot be undone. Are you sure you want to delete this period record?</string>
+    <string name="detail_delete_confirm">Delete</string>
+    <!-- Onboarding -->
+    <string name="onboarding_welcome">Before we begin, we need a few details about your cycle to provide accurate predictions.\n\n\nYour data is stored locally and can be deleted at any time.</string>
+    <string name="onboarding_all_set">All set!</string>
+    <string name="onboarding_get_started">Get started</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_skip">Skip for now</string>
+    <string name="onboarding_step_indicator">Step %1$d of %2$d</string>
+    <string name="onboarding_adjust">Adjust</string>
+    <string name="onboarding_confirm">Confirm</string>
+    <string name="onboarding_cycle_settings_title">About your cycle</string>
+    <string name="onboarding_cycle_settings_hint">Set your typical period duration and cycle length. You can adjust these later in settings.</string>
+    <string name="onboarding_period_duration_label">Period duration</string>
+    <string name="onboarding_cycle_length_label">Cycle length</string>
+    <string name="onboarding_all_set_hint_simple">Your period has been recorded. Predictions are now enabled.</string>
+    <string name="onboarding_all_set_hint_imported">%1$d cycles imported. Predictions are now enabled.</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_save">Save</string>
+    <!-- Onboarding ??Health sync step -->
+    <string name="onboarding_health_title">Sync from Health</string>
+    <string name="onboarding_health_desc">Import your existing menstrual records from Apple Health or Google Health Connect to get predictions right away. Your data stays on this device.</string>
+    <string name="onboarding_health_connect">Connect</string>
+    <string name="onboarding_health_syncing">Connecting...</string>
+    <string name="onboarding_health_imported">%1$d records imported</string>
+    <string name="onboarding_health_imported_one">1 record imported</string>
+    <string name="onboarding_health_no_records">No records found in Health</string>
+    <string name="onboarding_health_failed">Couldn\'t connect. Make sure to allow access to menstrual data when prompted.</string>
+    <string name="onboarding_health_retry">Try again</string>
+    <string name="onboarding_restore_json">Restore from local backup</string>
+    <!-- Onboarding ??Notifications step -->
+    <string name="onboarding_notifications_title">Reminders</string>
+    <string name="onboarding_notifications_desc">Get gentle nudges before your period and ovulation. Toggle on what you want ??you can fine-tune in Settings later.</string>
+    <!-- Onboarding ??Synthetic data note -->
+    <string name="onboarding_synthetic_hint">We\'ll generate a few past cycles based on these settings so predictions work right away. You can review and edit them anytime.</string>
+    <!-- Onboarding ??Period status step -->
+    <string name="onboarding_status_title">Where are you in your cycle?</string>
+    <string name="onboarding_status_subtitle">Pick the option that matches your situation right now.</string>
+    <string name="onboarding_status_active_title">I\'m on my period now</string>
+    <string name="onboarding_status_active_subtitle">We\'ll track it as ongoing.</string>
+    <string name="onboarding_status_ended_title">My last period has ended</string>
+    <string name="onboarding_status_ended_subtitle">Pick the start and end dates.</string>
+    <string name="onboarding_status_unsure_title">I\'m not sure yet</string>
+    <string name="onboarding_status_unsure_subtitle">Skip for now ??record from the home screen anytime.</string>
+    <string name="onboarding_status_simple_title">Are you on your period right now?</string>
+    <string name="onboarding_status_simple_subtitle">We already imported your history. Just tell us about today.</string>
+    <string name="onboarding_status_simple_no_title">Not right now</string>
+    <string name="onboarding_status_simple_no_subtitle">Use the imported history for predictions.</string>
+    <string name="onboarding_status_active_start_label">Started on</string>
+    <string name="onboarding_status_ended_start_label">Started on</string>
+    <string name="onboarding_status_ended_end_label">Ended on</string>
+    <string name="onboarding_status_pick_date">Pick a date</string>
+    <string name="onboarding_status_pick_start">Pick start date</string>
+    <string name="onboarding_status_pick_end">Pick end date</string>
+    <string name="onboarding_status_unsure_hint">We\'ll use default cycle settings to get you started. You can fine-tune anytime.</string>
+    <string name="onboarding_status_imported_chip">%1$d records imported</string>
+    <string name="onboarding_status_auto_detected">We detected an ongoing period in your imported records.</string>
+    
+    <!-- Onboarding ??User Status (Medical Condition) -->
+    <string name="onboarding_status_health_title">Your Health Profile</string>
+    <string name="onboarding_status_health_subtitle">Help us provide better tracking and insights.</string>
+    <string name="user_status_regular">Regular Cycle</string>
+    <string name="user_status_regular_desc">No known conditions affecting cycle regularity.</string>
+    <string name="user_status_postpartum">Postpartum / Nursing</string>
+    <string name="user_status_postpartum_desc">May experience prolonged amenorrhea before cycle returns.</string>
+    <string name="user_status_oncology_tamoxifen">Anti-estrogen Therapy</string>
+    <string name="user_status_oncology_tamoxifen_desc">Selective estrogen receptor modulators. Monitor for abnormal bleeding.</string>
+    <string name="user_status_oncology_other">Long-term Special Medication</string>
+    <string name="user_status_oncology_other_desc">Chemotherapy, aromatase inhibitors, or ovarian suppression.</string>
+    <string name="user_status_pcos">Polycystic Ovary Syndrome (PCOS)</string>
+    <string name="user_status_pcos_desc">Often causes irregular or absent menstrual periods.</string>
+    <string name="user_status_tracking_mode">Tracking mode</string>
+    <string name="user_status_tracking_mode_short">Tracking</string>
+    <string name="user_status_endometriosis">Endometriosis</string>
+    <string name="user_status_endometriosis_desc">May cause severe pelvic pain or heavy bleeding.</string>
+    <string name="user_status_hormonal_contraception">Hormonal Contraception</string>
+    <string name="user_status_hormonal_contraception_desc">Pill, IUD, implant, or injectable. Bleeds are withdrawal bleeds.</string>
+    <string name="user_status_thyroid">Thyroid Disorder</string>
+    <string name="user_status_thyroid_desc">Hypo/hyperthyroidism can cause cycle irregularity.</string>
+    <string name="user_status_perimenopause">Perimenopause</string>
+    <string name="user_status_perimenopause_desc">Transition to menopause with fluctuating hormones.</string>
+    <string name="user_status_other">Other condition</string>
+    <string name="user_status_other_desc">Another condition affecting cycle regularity.</string>
+
+    <!-- Statistics Screen -->
+    <string name="stats_empty_message">Record at least 2 periods to see your statistics</string>
+    <string name="stats_avg_section_title">Average of last %1$d cycles</string>
+    <string name="stats_period_days">Period days</string>
+    <string name="stats_cycle_days">Cycle days</string>
+    <string name="stats_chart_title">Cycle (days)</string>
+    <string name="stats_legend_actual">Actual days</string>
+    <string name="stats_legend_predicted">Predicted days</string>
+    <string name="stats_history_title">Cycle History</string>
+    <!-- Settings Screen -->
+    <string name="app_version">Version %1$s</string>
+    <string name="settings_display_mode">Display Mode</string>
+    <string name="settings_mode_system">System</string>
+    <string name="settings_mode_light">Light</string>
+    <string name="settings_mode_dark">Dark</string>
+    <string name="settings_period_duration">Period Duration</string>
+    <string name="settings_cycle_length">Cycle Length</string>
+    <string name="settings_export">Export report</string>
+    <string name="settings_export_value">Share as long image</string>
+    <string name="export_dialog_title">Share long image</string>
+    <string name="export_dialog_body">Choose the language for the report. The long image will open in the system share sheet ??pick where to send it or tap Save to Photos / gallery.</string>
+    <string name="export_lang_english">English</string>
+    <string name="export_lang_chinese">Traditional Chinese</string>
+    <string name="export_button">Export</string>
+    <string name="export_in_progress">Exporting...</string>
+    <string name="export_success_title">Share sheet opened</string>
+    <string name="export_success_body">Pick a destination in the share sheet to send or save the image.</string>
+    <string name="export_failure_title">Export failed</string>
+    <string name="export_failure_body">Could not save the report: %1$s</string>
+    <string name="export_no_data">There are no records to export yet.</string>
+    <string name="export_range_label">Date range</string>
+    <string name="export_range_3m">Last 3 months</string>
+    <string name="export_range_6m">Last 6 months</string>
+    <string name="export_range_1y">Last 1 year</string>
+    <string name="export_range_all">All records</string>
+    <string name="export_range_custom">Custom range</string>
+    <string name="export_range_from">From</string>
+    <string name="export_range_to">To</string>
+    <string name="export_range_pick">Pick date</string>
+    
+    <!-- Backup/Restore -->
+    <string name="settings_backup_title">Backup Data</string>
+    <string name="settings_backup_export">Export to JSON</string>
+    <string name="settings_backup_export_desc">Save data to Downloads for safe keeping</string>
+    <string name="settings_backup_import">Import JSON</string>
+    <string name="settings_backup_import_desc">Restore records from a local backup file.</string>
+    <string name="settings_backup_export_success">Exported successfully.</string>
+    
+    <string name="settings_clear_data">Clear all data</string>
+    <string name="settings_clear_data_value">Start over</string>
+    <string name="settings_clear_title">Confirm Clear</string>
+    <string name="settings_clear_body">This will delete all period records and restart onboarding. This action cannot be undone.</string>
+    <string name="settings_about">About Us</string>
+    <string name="settings_about_org">LUNE</string>
+    <string name="settings_made_by">Made By Chancecmh1019</string>
+    <string name="splash_built_by">Made By Chancecmh1019</string>
+    <!-- Weekday labels -->
+    <string name="calendar_month_label">%1$d</string>
+
+    <!-- Months -->
+    <string name="month_january">January</string>
+    <string name="month_february">February</string>
+    <string name="month_march">March</string>
+    <string name="month_april">April</string>
+    <string name="month_may">May</string>
+    <string name="month_june">June</string>
+    <string name="month_july">July</string>
+    <string name="month_august">August</string>
+    <string name="month_september">September</string>
+    <string name="month_october">October</string>
+    <string name="month_november">November</string>
+    <string name="month_december">December</string>
+
+    <string name="month_short_jan">Jan</string>
+    <string name="month_short_feb">Feb</string>
+    <string name="month_short_mar">Mar</string>
+    <string name="month_short_apr">Apr</string>
+    <string name="month_short_may">May</string>
+    <string name="month_short_jun">Jun</string>
+    <string name="month_short_jul">Jul</string>
+    <string name="month_short_aug">Aug</string>
+    <string name="month_short_sep">Sep</string>
+    <string name="month_short_oct">Oct</string>
+    <string name="month_short_nov">Nov</string>
+    <string name="month_short_dec">Dec</string>
+
+    <!-- Weekday labels -->
+    <string name="weekday_short_mon">M</string>
+    <string name="weekday_short_tue">T</string>
+    <string name="weekday_short_wed">W</string>
+    <string name="weekday_short_thu">T</string>
+    <string name="weekday_short_fri">F</string>
+    <string name="weekday_short_sat">S</string>
+    <string name="weekday_short_sun">S</string>
+
+    <!-- Cycle phases -->
+    <string name="detail_ovulation">Ovulation</string>
+    <string name="detail_delete_period">Delete period</string>
+    <string name="detail_shorten_period">End period here</string>
+    <string name="detail_extend_period">Extend period</string>
+    <string name="detail_add_period">Add period</string>
+    <string name="detail_no_selection">Tap a date to view details</string>
+    <string name="detail_cycle_status">Cycle status</string>
+    <string name="detail_current_phase">Current phase</string>
+    <string name="detail_tips">Tips</string>
+    <string name="detail_notes">Notes</string>
+    <string name="detail_notes_hint">Record medications, symptoms or other notes…</string>
+    <string name="detail_ovulation_day">Ovulation day</string>
+    <string name="phase_menstrual">Menstrual</string>
+    <string name="phase_follicular">Follicular</string>
+    <string name="phase_ovulation">Ovulation</string>
+    <string name="phase_luteal">Luteal</string>
+    <string name="home_current_phase">Current phase</string>
+    <string name="home_last_period">Last period</string>
+    <string name="home_next_period_starts">Next period starts</string>
+    <string name="home_day_in_cycle">Day %1$d of %2$d</string>
+    <string name="phase_menstrual_desc">Uterine lining sheds. Rest and stay warm.</string>
+    <string name="phase_follicular_desc">Body prepares for ovulation. Energy rises.</string>
+    <string name="phase_ovulation_desc">Egg is released. Peak fertility window.</string>
+    <string name="phase_luteal_desc">Post-ovulation. PMS symptoms may appear.</string>
+    <string name="phase_menstrual_desc_day1">Day 1 ??flow is often heaviest. Rest, stay warm, take it easy.</string>
+    <string name="phase_menstrual_desc_day2">Day 2 ??cramps may peak. A heat pad and gentle stretches can help.</string>
+    <string name="phase_menstrual_desc_day3">Day 3 ??flow is easing. Sip warm fluids and don\'t overdo it.</string>
+    <string name="phase_menstrual_desc_day4">Day 4 ??energy is returning. Iron-rich meals support recovery.</string>
+    <string name="phase_menstrual_desc_day5_plus">Tail end ??light spotting is normal. Listen to your body.</string>
+    <string name="phase_follicular_desc_early">Early follicular ??energy is bouncing back. Good time to start something new.</string>
+    <string name="phase_follicular_desc_mid">Mid follicular ??clear-headed and productive. Make the most of it.</string>
+    <string name="phase_follicular_desc_late">Late follicular ??fertile window is approaching. Cervical mucus may increase.</string>
+    <string name="phase_ovulation_desc_early">Fertile window opening ??chances of conception begin to rise.</string>
+    <string name="phase_ovulation_desc_mid">Peak fertility ??most likely to conceive now.</string>
+    <string name="phase_ovulation_desc_late">Fertility waning ??the window is closing soon.</string>
+    <string name="phase_luteal_desc_early">Early luteal ??calm and steady. Subtle PMS symptoms may begin.</string>
+    <string name="phase_luteal_desc_mid">Mid luteal ??mood swings or cravings are common. Be gentle with yourself.</string>
+    <string name="phase_luteal_desc_late">Late luteal ??period is near. Rest, hydrate, ease up on stressors.</string>
+    <string name="phase_now">Now</string>
+    <string name="phase_in_days">in %1$d days</string>
+    <string name="anomaly_short_cycle_title">Cycle Anomaly: Very Short</string>
+    <string name="anomaly_short_cycle_body">This cycle is less than 14 days, which may be ovulatory bleeding or hormonal fluctuations. Consult a doctor if concerned. This data is excluded from average calculations.</string>
+    <!-- Notifications -->
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notifications_value">Reminders</string>
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_description">Reminders are scheduled locally on this device. Nothing is sent to a server.</string>
+    <string name="notifications_period_title">Period reminder</string>
+    <string name="notifications_ovulation_title">Ovulation reminder</string>
+    <string name="notifications_daily_title">Daily report</string>
+    <string name="notifications_off">Off</string>
+    <string name="notifications_day_before">1 day before</string>
+    <string name="notifications_days_before">%1$d days before</string>
+    <string name="notifications_at_time">At %1$d:%2$s</string>
+    <string name="notifications_adjust">Adjust</string>
+    <string name="notifications_daily_time">Daily report time</string>
+    <string name="notifications_permission_required">Notification permission required</string>
+    <string name="notifications_permission_hint">Tap to grant permission so reminders can be delivered.</string>
+    <!-- Health Data Sync -->
+    <string name="settings_health_data">Health Data</string>
+    <string name="settings_health_sync">Sync with Health</string>
+    <string name="settings_health_sync_desc">Sync menstrual records with Apple Health or Google Health Connect</string>
+    <string name="settings_health_sync_now">Sync Now</string>
+    <string name="settings_health_syncing">Syncing...</string>
+    <string name="settings_health_last_sync">Last synced: %1$s</string>
+    <string name="settings_health_never_synced">Never synced</string>
+    <string name="settings_health_not_available">Health data is not available on this device</string>
+    <string name="settings_health_not_authorized">Permission required to sync health data</string>
+    <!-- Notification payload copy -->
+    <string name="notif_period_title">Period is approaching</string>
+    <string name="notif_period_body">Your next period is expected in about %1$d days. Time to get ready.</string>
+    <string name="notif_ovulation_title">Ovulation window soon</string>
+    <string name="notif_ovulation_body">You are entering your fertile window in about %1$d days.</string>
+    <string name="notif_daily_title">Daily cycle report</string>
+    <string name="notif_daily_body">Open the app to see today\'s phase and log how you feel.</string>
+</resources>
+
+
