@@ -306,7 +306,7 @@ main {
 .phone-mockup {
     width: 300px;
     height: 600px;
-    background: rgba(248, 249, 250, 0.8);
+    background: url('Screenshot.png') center/cover no-repeat;
     backdrop-filter: blur(10px);
     border: 8px solid var(--text-primary);
     border-radius: 40px;
