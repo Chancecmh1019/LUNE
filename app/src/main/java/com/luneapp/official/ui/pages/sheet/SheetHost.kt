@@ -19,6 +19,7 @@ fun SheetHost(viewModel: SheetViewModel) {
     when (val r = request) {
         is SheetRequest.LogDay -> LogDaySheet(
             targetDate = r.targetDate,
+            existingRecord = r.existingRecord,
             onDismiss = { viewModel.dismiss() },
             onSave = { intensity, mood, symptoms, notes, medications, clinicalNotes, bleedingType ->
                 r.result.complete(LogDayResult(intensity, mood, symptoms, notes, medications, clinicalNotes, bleedingType))
@@ -34,6 +35,8 @@ fun SheetHost(viewModel: SheetViewModel) {
             onEditStart = { r.result.complete(DetailAction.EditStart) },
             onEditEnd = { r.result.complete(DetailAction.EditEnd) },
             onDelete = { r.result.complete(DetailAction.Delete) },
+            onLogDay = { r.result.complete(DetailAction.LogDay) },
+            onLogSpecificDay = { date -> r.result.complete(DetailAction.LogSpecificDay(date)) },
         )
 
         is SheetRequest.PredictionDetail -> PredictionDetailSheet(

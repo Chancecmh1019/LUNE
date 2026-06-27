@@ -43,6 +43,7 @@ internal fun DetailCalendarView(
     cycleState: CycleState,
     phaseInfo: CyclePhaseInfo?,
     service: MenstrualService,
+    sheetViewModel: com.luneapp.official.ui.pages.sheet.SheetViewModel,
     onRefresh: () -> Unit,
     selectedDate: LocalDate?,
     onSelectedDateChange: (LocalDate?) -> Unit,
@@ -292,71 +293,17 @@ internal fun DetailCalendarView(
                     }
                 }
             }
-
-            // Item 3.5: Editable notes block
+            // Item 3.5: Log Full Health Details Button
             item {
-                val containingRecord2 = allRecords.find { r ->
-                    val rEnd = r.endDate ?: today
-                    date in r.startDate..rEnd
-                }
-                val existingDaily2 = containingRecord2?.dailyRecords?.find { it.date == date }
-                var notesText by remember(date) { mutableStateOf(existingDaily2?.notes ?: "") }
-
-                Surface(
-                    tonalElevation = 1.dp,
-                    shape = MaterialTheme.shapes.extraLarge,
+                SmallSpacer(16)
+                androidx.compose.material3.OutlinedButton(
+                    onClick = {
+                        sheetViewModel.launchLogDay(date, onRefresh)
+                    },
                     modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.large
                 ) {
-                    Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                        Text(
-                            stringResource(R.string.detail_notes),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        SmallSpacer(6)
-                        OutlinedTextField(
-                            value = notesText,
-                            onValueChange = { notesText = it },
-                            placeholder = {
-                                Text(
-                                    stringResource(R.string.detail_notes_hint),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                                )
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            minLines = 3,
-                            shape = MaterialTheme.shapes.large,
-                            textStyle = MaterialTheme.typography.bodySmall,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                            ),
-                        )
-                        SmallSpacer(8)
-                        // Save button appears when text is edited
-                        val hasUnsaved = notesText != (existingDaily2?.notes ?: "")
-                        androidx.compose.animation.AnimatedVisibility(visible = hasUnsaved) {
-                            Button(
-                                onClick = {
-                                    scope.launch {
-                                        val record = containingRecord2
-                                        if (record != null) {
-                                            val existing = record.dailyRecords.find { it.date == date }
-                                            val updated = existing?.copy(notes = notesText.ifBlank { null })
-                                                ?: DailyRecord(date = date, notes = notesText.ifBlank { null })
-                                            service.logDay(record.id, updated)
-                                            onRefresh()
-                                        }
-                                    }
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = MaterialTheme.shapes.large,
-                            ) {
-                                Text(stringResource(R.string.onboarding_save), style = MaterialTheme.typography.labelMedium)
-                            }
-                        }
-                    }
+                    Text(stringResource(R.string.detail_log_health_details))
                 }
             }
 

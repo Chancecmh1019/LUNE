@@ -22,6 +22,9 @@ android {
             ?: libs.versions.app.versionCode.get().toInt()
         versionName = System.getenv("VERSION_NAME")
             ?: libs.versions.app.versionName.get()
+        
+        buildConfigField("String", "VERSION_NAME", "\"${versionName}\"")
+        buildConfigField("int", "VERSION_CODE", "${versionCode}")
     }
     signingConfigs {
         create("release") {

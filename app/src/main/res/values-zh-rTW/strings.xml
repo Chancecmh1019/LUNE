@@ -81,6 +81,7 @@
     <string name="day_picker_hint">選擇要補充紀錄的日期</string>
     <string name="day_picker_recorded">已紀錄</string>
     <!-- Record Detail Sheet -->
+    <string name="detail_log_day">紀錄健康詳情</string>
     <string name="detail_delete">刪除此紀錄</string>
     <string name="detail_delete_title">確認刪除</string>
     <string name="detail_delete_body">刪除後無法復原，確定要刪除這條經期記錄嗎？</string>
@@ -167,6 +168,18 @@
     <string name="user_status_perimenopause_desc">荷爾蒙波動大，正處於向停經過渡的階段。</string>
     <string name="user_status_other">其他情況</string>
     <string name="user_status_other_desc">其他會影響週期規律的情況。</string>
+    <string name="status_group_hormonal">荷爾蒙失調</string>
+    <string name="status_group_hormonal_desc">多囊性卵巢症候群、甲狀腺疾病等。</string>
+    <string name="status_group_structural">子宮結構性病變</string>
+    <string name="status_group_structural_desc">子宮內膜異位症、子宮肌瘤等。</string>
+    <string name="status_group_life_stage">人生階段變化</string>
+    <string name="status_group_life_stage_desc">產後哺乳、更年期前期等。</string>
+    <string name="status_group_oncology">腫瘤科 / 癌症治療</string>
+    <string name="status_group_oncology_desc">泰莫西芬、化療等特殊用藥。</string>
+    <string name="status_group_bleeding">凝血與出血性疾病</string>
+    <string name="status_group_bleeding_desc">類血友病、血小板異常等。</string>
+    <string name="status_group_autoimmune">自體免疫與慢性疾病</string>
+    <string name="status_group_autoimmune_desc">紅斑性狼瘡、類風濕性關節炎等。</string>
 
     <!-- Statistics Screen -->
     <string name="stats_empty_message">記錄至少 2 次月經，即可查看統計資料</string>
@@ -177,6 +190,17 @@
     <string name="stats_legend_actual">實際的天數</string>
     <string name="stats_legend_predicted">預測的天數</string>
     <string name="stats_history_title">週期歷史</string>
+    
+    <!-- Regularity Analysis -->
+    <string name="stats_regularity_highly">高度規律</string>
+    <string name="stats_regularity_moderately">中度規律</string>
+    <string name="stats_regularity_irregular">不規律</string>
+    <string name="stats_analysis_title">演算法分析</string>
+    <string name="stats_based_on_cycles">基於最近 %1$d 個週期</string>
+    <string name="stats_confidence_percent">%1$d%% 預測信心</string>
+    <string name="stats_std_dev_label">週期標準差 (天)</string>
+    <string name="stats_pred_window_label">預測誤差區間</string>
+
     <!-- Settings Screen -->
     <string name="app_version">版本 %1$s</string>
     <string name="settings_display_mode">顯示模式</string>
@@ -274,6 +298,7 @@
     <string name="detail_tips">小提示</string>
     <string name="detail_notes">備註</string>
     <string name="detail_notes_hint">記錄藥物、症狀或其他備忘…</string>
+    <string name="detail_log_health_details">+ 記錄完整健康細節</string>
     <string name="detail_ovulation_day">排卵日</string>
     <string name="phase_menstrual">經期</string>
     <string name="phase_follicular">濾泡期</string>

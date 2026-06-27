@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luneapp.official.R
 import com.luneapp.official.domain.menstrual.BleedingType
+import com.luneapp.official.domain.menstrual.DailyRecord
 import com.luneapp.official.domain.menstrual.Intensity
 import com.luneapp.official.domain.menstrual.Mood
 import com.luneapp.official.ui.components.PrimaryCta
@@ -29,20 +31,21 @@ import kotlinx.datetime.number
 @Composable
 fun LogDaySheet(
     targetDate: LocalDate? = null,
+    existingRecord: DailyRecord? = null,
     onDismiss: () -> Unit,
     onSave: (Intensity?, Mood?, List<String>, String?, String?, String?, BleedingType) -> Unit,
 ) {
-    var selectedIntensity by remember { mutableStateOf<Intensity?>(null) }
-    var selectedMood by remember { mutableStateOf<Mood?>(null) }
-    var selectedSymptoms by remember { mutableStateOf(setOf<String>()) }
-    var notes by remember { mutableStateOf("") }
-    var medications by remember { mutableStateOf("") }
-    var clinicalNotes by remember { mutableStateOf("") }
-    var bleedingType by remember { mutableStateOf(BleedingType.NORMAL) }
+    // Pre-fill with existing data if available
+    var selectedIntensity by remember { mutableStateOf<Intensity?>(existingRecord?.intensity) }
+    var selectedMood by remember { mutableStateOf<Mood?>(existingRecord?.mood) }
+    var selectedSymptoms by remember { mutableStateOf<Set<String>>(existingRecord?.symptoms?.toSet() ?: setOf()) }
+    var notes by remember { mutableStateOf(existingRecord?.notes ?: "") }
+    var medications by remember { mutableStateOf(existingRecord?.medications ?: "") }
+    var clinicalNotes by remember { mutableStateOf(existingRecord?.clinicalNotes ?: "") }
+    var bleedingType by remember { mutableStateOf(existingRecord?.bleedingType ?: BleedingType.NORMAL) }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
         containerColor = MaterialTheme.colorScheme.background,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
     ) {
@@ -72,7 +75,10 @@ fun LogDaySheet(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(12.dp))
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 listOf(
                     Triple(Intensity.LIGHT,  stringResource(R.string.intensity_light),  10.dp),
                     Triple(Intensity.MEDIUM, stringResource(R.string.intensity_medium), 18.dp),
@@ -96,7 +102,10 @@ fun LogDaySheet(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(10.dp))
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 listOf(
                     BleedingType.NORMAL         to stringResource(R.string.bleeding_normal),
                     BleedingType.SPOTTING       to stringResource(R.string.bleeding_spotting),
@@ -119,12 +128,15 @@ fun LogDaySheet(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(12.dp))
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
                 listOf(
-                    Triple(Mood.HAPPY,    stringResource(R.string.mood_happy),    "( ˶ˆ꒳ˆ˵ )"),
-                    Triple(Mood.NEUTRAL,  stringResource(R.string.mood_neutral),  "( ˘ ᵕ ˘ )"),
-                    Triple(Mood.SAD,      stringResource(R.string.mood_sad),      "( ˘︹˘ )"),
-                    Triple(Mood.VERY_SAD, stringResource(R.string.mood_very_sad), "( ╥_╥ )"),
+                    Triple(Mood.HAPPY,    stringResource(R.string.mood_happy),    "🥰"),
+                    Triple(Mood.NEUTRAL,  stringResource(R.string.mood_neutral),  "😌"),
+                    Triple(Mood.SAD,      stringResource(R.string.mood_sad),      "🥺"),
+                    Triple(Mood.VERY_SAD, stringResource(R.string.mood_very_sad), "😭"),
                 ).forEach { (value, label, icon) ->
                     IconOption(
                         icon     = icon,
@@ -144,9 +156,9 @@ fun LogDaySheet(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(12.dp))
-            FlowRow(
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 listOf(
                     "cramps"           to stringResource(R.string.symptom_cramps),
@@ -247,6 +259,8 @@ fun LogDaySheet(
                         clinicalNotes.takeIf { it.isNotBlank() },
                         bleedingType,
                     )
+                    // DO NOT call onDismiss() here - it will cancel the save!
+                    // The sheet will close automatically when _activeSheet becomes null
                 },
             )
             Spacer(Modifier.height(16.dp))
@@ -261,7 +275,12 @@ private fun DotOption(dotSize: Dp, label: String, selected: Boolean, onClick: ()
             Modifier
                 .size(56.dp)
                 .clip(CircleShape)
-                .background(if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f))
+                .background(
+                    if (selected) 
+                        MaterialTheme.colorScheme.primaryContainer
+                    else 
+                        MaterialTheme.colorScheme.surfaceVariant
+                )
                 .clickable(onClick = onClick),
             contentAlignment = Alignment.Center,
         ) {
@@ -269,15 +288,25 @@ private fun DotOption(dotSize: Dp, label: String, selected: Boolean, onClick: ()
                 Modifier
                     .size(dotSize)
                     .clip(CircleShape)
-                    .background(if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground)
+                    .background(
+                        if (selected) 
+                            MaterialTheme.colorScheme.primary 
+                        else 
+                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                    )
             )
         }
         Spacer(Modifier.height(4.dp))
         Text(
             label,
-            style = if (selected) MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
-            else MaterialTheme.typography.labelMedium,
-            color = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant,
+            style = if (selected) 
+                MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
+            else 
+                MaterialTheme.typography.labelMedium,
+            color = if (selected) 
+                MaterialTheme.colorScheme.primary 
+            else 
+                MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -289,18 +318,35 @@ private fun IconOption(icon: String, label: String, selected: Boolean, onClick: 
             Modifier
                 .size(56.dp)
                 .clip(CircleShape)
-                .background(if (selected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f))
+                .background(
+                    if (selected) 
+                        MaterialTheme.colorScheme.primaryContainer
+                    else 
+                        MaterialTheme.colorScheme.surfaceVariant
+                )
                 .clickable(onClick = onClick),
             contentAlignment = Alignment.Center,
         ) {
-            Text(icon, fontSize = 24.sp)
+            Text(
+                icon, 
+                fontSize = 24.sp,
+                color = if (selected) 
+                    MaterialTheme.colorScheme.primary 
+                else 
+                    MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
         Spacer(Modifier.height(4.dp))
         Text(
             label,
-            style = if (selected) MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
-            else MaterialTheme.typography.labelMedium,
-            color = if (selected) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant,
+            style = if (selected) 
+                MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold)
+            else 
+                MaterialTheme.typography.labelMedium,
+            color = if (selected) 
+                MaterialTheme.colorScheme.primary 
+            else 
+                MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -310,14 +356,24 @@ private fun PillChip(label: String, selected: Boolean, onClick: () -> Unit) {
     Box(
         Modifier
             .clip(RoundedCornerShape(50))
-            .background(if (selected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f))
+            .background(
+                if (selected) 
+                    MaterialTheme.colorScheme.primary
+                else 
+                    MaterialTheme.colorScheme.surfaceVariant
+            )
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
         Text(
             label,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onBackground,
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal
+            ),
+            color = if (selected) 
+                MaterialTheme.colorScheme.onPrimary 
+            else 
+                MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 }

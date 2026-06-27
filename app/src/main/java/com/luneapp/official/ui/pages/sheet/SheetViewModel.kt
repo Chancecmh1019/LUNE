@@ -2,8 +2,12 @@ package com.luneapp.official.ui.pages.sheet
 
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.luneapp.official.domain.menstrual.*
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -43,6 +47,7 @@ sealed class SheetRequest {
 
     data class LogDay(
         val targetDate: LocalDate?,
+        val existingRecord: DailyRecord?,
         val result: CompletableDeferred<LogDayResult?>,
     ) : SheetRequest() { override val deferred get() = result }
 
@@ -95,8 +100,17 @@ class SheetViewModel(private val service: MenstrualService) : ViewModel() {
     // ---- Low-level: show sheet and suspend until result ----
 
     private suspend fun showLogDaySheet(targetDate: LocalDate? = null): LogDayResult? {
+        // Load existing DailyRecord for this date if it exists
+        val state = service.getCycleState()
+        val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
+        val dateToEdit = targetDate ?: today
+        
+        val existingRecord = state.records
+            .flatMap { it.dailyRecords }
+            .find { it.date == dateToEdit }
+        
         val deferred = CompletableDeferred<LogDayResult?>()
-        _activeSheet.value = SheetRequest.LogDay(targetDate, deferred)
+        _activeSheet.value = SheetRequest.LogDay(targetDate, existingRecord, deferred)
         return deferred.await().also { _activeSheet.value = null }
     }
 
@@ -223,7 +237,9 @@ class SheetViewModel(private val service: MenstrualService) : ViewModel() {
             clinicalNotes = result.clinicalNotes,
             bleedingType = result.bleedingType,
         )
-        return service.logDay(record.id, day)
+        return service.logDay(record.id, day).also { success ->
+            if (success) _dataChanged.tryEmit(Unit)
+        }
     }
 
     /** Log a day for a specific record. */
@@ -239,7 +255,53 @@ class SheetViewModel(private val service: MenstrualService) : ViewModel() {
             clinicalNotes = result.clinicalNotes,
             bleedingType = result.bleedingType,
         )
-        return service.logDay(recordId, day)
+        return service.logDay(recordId, day).also { success ->
+            if (success) _dataChanged.tryEmit(Unit)
+        }
+    }
+
+    /**
+     * Show the log-day sheet for [targetDate] and save to whichever record
+     * contains that date, or to the most recent record if none contains it.
+     * If no record exists at all, the sheet is still shown but nothing is saved.
+     */
+    suspend fun logDayForAnyRecord(targetDate: LocalDate): Boolean? {
+        val result = showLogDaySheet(targetDate) ?: return null
+        val state = service.getCycleState()
+        val record = state.records
+            .filter { !it.isDeleted }
+            .find { r ->
+                val rEnd = r.endDate ?: targetDate
+                targetDate in r.startDate..rEnd
+            }
+            ?: state.records.filter { !it.isDeleted }.maxByOrNull { it.startDate }
+            ?: return false
+        val day = DailyRecord(
+            date = targetDate,
+            intensity = result.intensity,
+            mood = result.mood,
+            symptoms = result.symptoms,
+            notes = result.notes,
+            medications = result.medications,
+            clinicalNotes = result.clinicalNotes,
+            bleedingType = result.bleedingType,
+        )
+        return service.logDay(record.id, day).also { _dataChanged.tryEmit(Unit) }
+    }
+
+    /**
+     * Fire-and-forget wrapper for [logDayForAnyRecord] that runs in
+     * [viewModelScope] so the coroutine is never cancelled by a composable
+     * lifecycle event (e.g. orientation change or navigation).
+     * [onComplete] is called back on the Main thread after save finishes.
+     */
+    fun launchLogDay(targetDate: LocalDate, onComplete: () -> Unit = {}) {
+        viewModelScope.launch {
+            logDayForAnyRecord(targetDate)
+            withContext(Dispatchers.Main) {
+                onComplete()
+            }
+        }
     }
 
     /** Show record detail. Returns the action the user chose, or null if dismissed. */
@@ -290,8 +352,12 @@ class SheetViewModel(private val service: MenstrualService) : ViewModel() {
                     service.editRecordDates(record.id, newStart = null, newEnd = newEnd)
                 }
             }
-            is DetailAction.LogDay -> logDay()
-            is DetailAction.LogSpecificDay -> logDayForRecord(record.id, action.date)
+            is DetailAction.LogDay -> {
+                logDay()
+            }
+            is DetailAction.LogSpecificDay -> {
+                logDayForRecord(record.id, action.date)
+            }
             is DetailAction.Delete -> service.deleteRecord(record.id)
         }
         _dataChanged.tryEmit(Unit)

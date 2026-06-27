@@ -194,6 +194,7 @@ private fun HomeContent(
                     cycleState = cycleState,
                     phaseInfo = phaseInfo,
                     service = service,
+                    sheetViewModel = sheetViewModel,
                     onRefresh = onRefresh,
                     selectedDate = detailSelectedDate,
                     onSelectedDateChange = onDetailSelectedDateChange,

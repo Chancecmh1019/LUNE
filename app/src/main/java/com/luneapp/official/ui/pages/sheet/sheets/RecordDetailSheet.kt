@@ -34,6 +34,8 @@ fun RecordDetailSheet(
     onEditStart: () -> Unit,
     onEditEnd: () -> Unit,
     onDelete: () -> Unit,
+    onLogDay: () -> Unit = {},
+    onLogSpecificDay: (LocalDate) -> Unit = {},
 ) {
     val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
     
@@ -127,6 +129,19 @@ fun RecordDetailSheet(
             }
 
             SmallSpacer(24)
+
+            // Log health details for this record
+            FilledTonalButton(
+                onClick = onLogDay,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
+                shape = MaterialTheme.shapes.extraLarge,
+            ) {
+                Text(stringResource(R.string.detail_log_day))
+            }
+
+            SmallSpacer(8)
 
             // ww Delete Button ww
             TextButton(

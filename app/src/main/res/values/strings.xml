@@ -81,6 +81,7 @@
     <string name="day_picker_hint">Select a date to add a record</string>
     <string name="day_picker_recorded">Recorded</string>
     <!-- Record Detail Sheet -->
+    <string name="detail_log_day">Log Health Details</string>
     <string name="detail_delete">Delete this record</string>
     <string name="detail_delete_title">Confirm Delete</string>
     <string name="detail_delete_body">This cannot be undone. Are you sure you want to delete this period record?</string>
@@ -167,6 +168,18 @@
     <string name="user_status_perimenopause_desc">Transition to menopause with fluctuating hormones.</string>
     <string name="user_status_other">Other condition</string>
     <string name="user_status_other_desc">Another condition affecting cycle regularity.</string>
+    <string name="status_group_hormonal">Hormonal Imbalance</string>
+    <string name="status_group_hormonal_desc">PCOS, Thyroid issues, etc.</string>
+    <string name="status_group_structural">Structural Conditions</string>
+    <string name="status_group_structural_desc">Endometriosis, Fibroids, etc.</string>
+    <string name="status_group_life_stage">Life Stage Transition</string>
+    <string name="status_group_life_stage_desc">Postpartum, Perimenopause, etc.</string>
+    <string name="status_group_oncology">Oncology / Cancer Treatment</string>
+    <string name="status_group_oncology_desc">Tamoxifen, Chemotherapy, etc.</string>
+    <string name="status_group_bleeding">Bleeding Disorders</string>
+    <string name="status_group_bleeding_desc">vWD, Platelet disorders, etc.</string>
+    <string name="status_group_autoimmune">Autoimmune &amp; Chronic</string>
+    <string name="status_group_autoimmune_desc">Lupus, Rheumatoid Arthritis, etc.</string>
 
     <!-- Statistics Screen -->
     <string name="stats_empty_message">Record at least 2 periods to see your statistics</string>
@@ -177,6 +190,17 @@
     <string name="stats_legend_actual">Actual days</string>
     <string name="stats_legend_predicted">Predicted days</string>
     <string name="stats_history_title">Cycle History</string>
+    
+    <!-- Regularity Analysis -->
+    <string name="stats_regularity_highly">Highly Regular</string>
+    <string name="stats_regularity_moderately">Moderately Regular</string>
+    <string name="stats_regularity_irregular">Irregular</string>
+    <string name="stats_analysis_title">Algorithm Analysis</string>
+    <string name="stats_based_on_cycles">Based on last %1$d cycles</string>
+    <string name="stats_confidence_percent">%1$d%% Confidence</string>
+    <string name="stats_std_dev_label">Std Deviation (days)</string>
+    <string name="stats_pred_window_label">Prediction Window</string>
+    
     <!-- Settings Screen -->
     <string name="app_version">Version %1$s</string>
     <string name="settings_display_mode">Display Mode</string>
@@ -275,6 +299,7 @@
     <string name="detail_tips">Tips</string>
     <string name="detail_notes">Notes</string>
     <string name="detail_notes_hint">Record medications, symptoms or other notes…</string>
+    <string name="detail_log_health_details">+ Log Full Health Details</string>
     <string name="detail_ovulation_day">Ovulation day</string>
     <string name="phase_menstrual">Menstrual</string>
     <string name="phase_follicular">Follicular</string>

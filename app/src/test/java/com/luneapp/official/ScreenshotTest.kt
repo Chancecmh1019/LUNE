@@ -247,6 +247,7 @@ class ScreenshotTest {
     fun log_day_en_light() = screenshotTest("en", AppDarkMode.LIGHT) {
         LogDaySheet(
             targetDate = LocalDate(2026, 3, 28),
+            existingRecord = null,
             onDismiss = {},
             onSave = { _, _, _, _ -> },
         )
@@ -256,6 +257,7 @@ class ScreenshotTest {
     fun log_day_en_dark() = screenshotTest("en", AppDarkMode.DARK) {
         LogDaySheet(
             targetDate = LocalDate(2026, 3, 28),
+            existingRecord = null,
             onDismiss = {},
             onSave = { _, _, _, _ -> },
         )
@@ -265,6 +267,7 @@ class ScreenshotTest {
     fun log_day_zh_light() = screenshotTest("zh", AppDarkMode.LIGHT) {
         LogDaySheet(
             targetDate = LocalDate(2026, 3, 28),
+            existingRecord = null,
             onDismiss = {},
             onSave = { _, _, _, _ -> },
         )
@@ -274,6 +277,7 @@ class ScreenshotTest {
     fun log_day_zh_dark() = screenshotTest("zh", AppDarkMode.DARK) {
         LogDaySheet(
             targetDate = LocalDate(2026, 3, 28),
+            existingRecord = null,
             onDismiss = {},
             onSave = { _, _, _, _ -> },
         )
