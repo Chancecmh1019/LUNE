@@ -1,8 +1,94 @@
-# LUNE - Period Calendar
+<div align="center">
 
-A privacy-first, open-source menstrual cycle tracker built with Kotlin Multiplatform and Compose Multiplatform. All data stays on your device. No account, no cloud, no network, no analytics, no ads.
+<img src="icon.png" alt="LUNE" width="120" height="120" style="border-radius: 26px;" />
 
-**Made By Chancecmh1019**
+# LUNE
+
+### Period Calendar
+
+A privacy-first menstrual cycle tracker built with Kotlin Multiplatform.  
+All data stays on your device. No account, no cloud, no network, no analytics, no ads.
+
+[Website](https://luneapp-official.vercel.app) • [Download](#installation)
+
+---
+
+</div>
+
+## Overview
+
+LUNE is a professional menstrual health tracking application designed with privacy as the foundation. Built using Kotlin Multiplatform and Compose Multiplatform, it provides comprehensive cycle tracking, intelligent predictions, and detailed health logging while ensuring all data remains exclusively on your device.
+
+**Made by Chancecmh1019**
+
+---
+
+## Screenshots
+
+<table>
+<tr>
+<td width="50%" bgcolor="#EDE8F5">
+
+### Understand Your Cycle at a Glance
+
+Current phase and predicted dates, clear and immediate.
+
+<img src="screenshots/1.png" width="100%" alt="Home - Overview Mode" />
+
+</td>
+<td width="50%" bgcolor="#F7ECF2">
+
+<img src="screenshots/2.png" width="100%" alt="Home - Detail Calendar" />
+
+### Every Day, Clearly Recorded
+
+Periods, ovulation, and fertile windows fully presented.
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" bgcolor="#E9F4EE">
+
+### Record Your Daily Status
+
+Symptoms, mood, notes. Complete in 30 seconds.
+
+<img src="screenshots/3.png" width="100%" alt="Daily Record Form" />
+
+</td>
+<td width="50%" bgcolor="#E8EFF9">
+
+<img src="screenshots/4.png" width="100%" alt="Home - Statistics View" />
+
+### Understand Your Body's Patterns
+
+Cycle length trends and average data statistics.
+
+</td>
+</tr>
+
+<tr>
+<td width="50%" bgcolor="#FDF0E8">
+
+### Be Prepared in Advance
+
+Period and ovulation reminders, never caught off guard.
+
+<img src="screenshots/5.png" width="100%" alt="Reminder Settings" />
+
+</td>
+<td width="50%" bgcolor="#F2F0EC">
+
+<img src="screenshots/6.png" width="100%" alt="Settings - Privacy & Export" />
+
+### Your Data Belongs Only to You
+
+No account, no cloud, completely offline usage.
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -14,6 +100,7 @@ A privacy-first, open-source menstrual cycle tracker built with Kotlin Multiplat
 - [Technical Specifications](#technical-specifications)
 - [Architecture](#architecture)
 - [Privacy & Security](#privacy--security)
+- [Installation](#installation)
 
 ---
 
@@ -207,6 +294,20 @@ composeApp/
 
 ---
 
+## Installation
+
+### Android
+Download the latest APK or AAB from the [releases page](../../releases).
+
+Minimum requirement: Android 8.0 (API 26) or higher
+
+### iOS
+Coming soon to the App Store.
+
+Minimum requirement: iOS 14.0 or higher
+
+---
+
 ## Privacy & Security
 
 ### Data Storage
@@ -242,6 +343,23 @@ All data stored locally using Android DataStore and iOS local storage with syste
 
 ---
 
-**Last Updated**: June 25, 2026
-**Version**: v0.0.1
-**Developer**: Chancecmh1019
+## Understanding Body Patterns
+
+LUNE helps you track cycle length trends and average statistics to better understand your body's natural rhythms.
+
+<div align="center">
+<img src="screenshots/4.png" width="45%" alt="Cycle Statistics" />
+</div>
+
+Statistical analysis includes:
+- Recent cycle length visualization
+- Six-cycle rolling averages
+- Complete historical record access
+- Trend identification for informed health discussions
+
+---
+
+**Last Updated**: June 28, 2026  
+**Version**: v0.0.1  
+**Developer**: Chancecmh1019  
+**Website**: [luneapp-official.vercel.app](https://luneapp-official.vercel.app)
