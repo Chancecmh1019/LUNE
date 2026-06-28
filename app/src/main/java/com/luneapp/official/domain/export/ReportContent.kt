@@ -248,7 +248,9 @@ internal object ReportContent {
     private fun bleedingLabel(type: BleedingType, s: ExportStrings) = when (type) {
         BleedingType.NORMAL         -> ""
         BleedingType.SPOTTING       -> s.bleedingSpotting
-        BleedingType.ABNORMAL_HEAVY -> s.bleedingAbnormal
+        BleedingType.HEAVY          -> s.bleedingHeavy
+        BleedingType.CLOTS          -> s.bleedingClots
+        BleedingType.PROLONGED      -> s.bleedingProlonged
     }
 
     private fun computeAvgCycle(records: List<MenstrualRecord>): Int? {

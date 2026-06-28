@@ -39,20 +39,26 @@
     <string name="mood_sad">低落</string>
     <string name="mood_very_sad">難受</string>
     <string name="record_symptoms">身體症狀</string>
-    <string name="symptom_cramps">經痛（腹痛）</string>
-    <string name="symptom_back_pain">腰痠</string>
+    <string name="symptom_cramps">經痛</string>
+    <string name="symptom_back_pain">下背痛</string>
     <string name="symptom_headache">頭痛</string>
-    <string name="symptom_breast_pain">胸部脹痛</string>
-    <string name="symptom_fatigue">疲倦</string>
-    <string name="symptom_hot_flash">潮熱</string>
-    <string name="symptom_pelvic_pain">骨盆疼痛</string>
+    <string name="symptom_breast_tenderness">乳房脹痛</string>
+    <string name="symptom_fatigue">疲勞</string>
+    <string name="symptom_bloating">腹脹</string>
+    <string name="symptom_mood_swings">情緒波動</string>
     <string name="symptom_nausea">噁心</string>
-    <string name="symptom_bloating">脹氣</string>
-    <string name="symptom_joint_pain">關節痛</string>
-    <string name="symptom_night_sweats">盜汗</string>
-    <string name="symptom_vaginal_dryness">陰道乾澀</string>
+    <string name="symptom_diarrhea">腹瀉</string>
+    <string name="symptom_constipation">便秘</string>
+    <string name="symptom_acne">痘痘</string>
+    <string name="symptom_anxiety">焦慮</string>
+    <string name="symptom_depression">憂鬱</string>
+    <string name="symptom_irritability">易怒</string>
     <string name="symptom_insomnia">失眠</string>
-    <string name="symptom_mood_swings">情緒起伏</string>
+    <string name="symptom_hot_flashes">熱潮紅</string>
+    <string name="symptom_night_sweats">夜間盜汗</string>
+    <string name="symptom_dizziness">頭暈</string>
+    <string name="symptom_food_cravings">食慾異常</string>
+    <string name="symptom_joint_pain">關節痛</string>
     <string name="record_medications">用藥</string>
     <string name="record_medications_hint">例如：泰莫西芬 20mg，止痛藥...</string>
     <string name="record_clinical_notes">臨床備註</string>
@@ -61,8 +67,10 @@
     <string name="record_notes_hint">寫下今天的心情...</string>
     <string name="record_bleeding_type">出血特徵</string>
     <string name="bleeding_normal">正常</string>
-    <string name="bleeding_spotting">經間期出血（點滴出血）</string>
-    <string name="bleeding_abnormal">異常大量出血</string>
+    <string name="bleeding_spotting">點滴出血</string>
+    <string name="bleeding_heavy">量多</string>
+    <string name="bleeding_clots">伴有血塊</string>
+    <string name="bleeding_prolonged">經期延長</string>
     <string name="record_save_btn">儲存紀錄</string>
     <string name="record_start_date">經期開始日期</string>
     <string name="record_end_date">經期結束日期</string>
@@ -158,6 +166,7 @@
     <string name="user_status_pcos_desc">常導致月經不規律或無月經。</string>
     <string name="user_status_tracking_mode">追蹤模式</string>
     <string name="user_status_tracking_mode_short">追蹤模式</string>
+    <string name="user_status_irregular_notice">由於您的健康狀況，預測準確度可能較低。建議以記錄為主。</string>
     <string name="user_status_endometriosis">子宮內膜異位症</string>
     <string name="user_status_endometriosis_desc">可能導致嚴重的骨盆疼痛或大量出血。</string>
     <string name="user_status_hormonal_contraception">荷爾蒙避孕</string>
@@ -182,7 +191,7 @@
     <string name="status_group_autoimmune_desc">紅斑性狼瘡、類風濕性關節炎等。</string>
 
     <!-- Statistics Screen -->
-    <string name="stats_empty_message">記錄至少 2 次月經，即可查看統計資料</string>
+    <string name="stats_empty_message">記錄至少 2 次月經時間即可查看統計資料</string>
     <string name="stats_avg_section_title">最近 %1$d 個週期的平均值</string>
     <string name="stats_period_days">經期長度</string>
     <string name="stats_cycle_days">週期長度</string>
@@ -235,10 +244,11 @@
     <!-- Backup/Restore -->
     <string name="settings_backup_title">資料備份</string>
     <string name="settings_backup_export">匯出至 JSON</string>
-    <string name="settings_backup_export_desc">應用程式備份成您的紀錄檔</string>
+    <string name="settings_backup_export_desc">將所有經期記錄儲存至資料夾</string>
     <string name="settings_backup_import">從 JSON 匯入</string>
-    <string name="settings_backup_import_desc">從本機備份檔還原您的紀錄</string>
+    <string name="settings_backup_import_desc">從備份檔案還原所有經期記錄</string>
     <string name="settings_backup_export_success">匯出成功</string>
+    <string name="settings_backup_import_success">匯入成功</string>
     
     <string name="settings_clear_data">清除所有資料</string>
     <string name="settings_clear_data_value">重新開始</string>
@@ -286,6 +296,15 @@
     <string name="weekday_short_sat">六</string>
     <string name="weekday_short_sun">日</string>
     
+    <!-- Weekday labels (3-letter, same as single for Chinese) -->
+    <string name="weekday_3letter_mon">一</string>
+    <string name="weekday_3letter_tue">二</string>
+    <string name="weekday_3letter_wed">三</string>
+    <string name="weekday_3letter_thu">四</string>
+    <string name="weekday_3letter_fri">五</string>
+    <string name="weekday_3letter_sat">六</string>
+    <string name="weekday_3letter_sun">日</string>
+    
     <!-- Cycle phases -->
     <string name="detail_ovulation">排卵期</string>
     <string name="detail_delete_period">刪除經期</string>
@@ -300,6 +319,7 @@
     <string name="detail_notes_hint">記錄藥物、症狀或其他備忘…</string>
     <string name="detail_log_health_details">+ 記錄完整健康細節</string>
     <string name="detail_ovulation_day">排卵日</string>
+    <string name="phase_day_label">%1$s 第%2$d天/%3$d天</string>
     <string name="phase_menstrual">經期</string>
     <string name="phase_follicular">濾泡期</string>
     <string name="phase_ovulation">排卵期</string>
@@ -328,6 +348,7 @@
     <string name="phase_luteal_desc_late">黃體期後段 — 月經將至，注意休息和補水。</string>
     <string name="phase_now">當前</string>
     <string name="phase_in_days">%1$d 天後</string>
+    <string name="phase_passed">已過</string>
     <string name="anomaly_short_cycle_title">週期異常過短</string>
     <string name="anomaly_short_cycle_body">兩次月經間隔不到14天。這可能是排卵期少量出血或內分泌波動，建議諮詢醫生。此資料不會計入平均週期計算。</string>
     <!-- Notifications -->

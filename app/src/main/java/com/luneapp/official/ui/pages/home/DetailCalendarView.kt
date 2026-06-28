@@ -1,5 +1,10 @@
 package com.luneapp.official.ui.pages.home
 
+import com.luneapp.official.ui.locale.LocalAppLocale
+import com.luneapp.official.ui.pages.sheet.LocalSheetViewModel
+import androidx.compose.foundation.border
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +18,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Replay
+import androidx.compose.material.icons.outlined.Today
 import androidx.compose.material.icons.outlined.TouchApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -88,6 +93,17 @@ internal fun DetailCalendarView(
             }
         }
     }
+    
+    // Dates with daily health records
+    val datesWithHealthRecords = remember(allRecords) {
+        buildSet {
+            allRecords.forEach { record ->
+                record.dailyRecords.forEach { daily ->
+                    add(daily.date)
+                }
+            }
+        }
+    }
 
     // Ovulation peak day (the single ovulation day)
     val ovulationPeakDates = remember(sortedAsc, phaseInfo, cycleState.predictions) {
@@ -145,16 +161,28 @@ internal fun DetailCalendarView(
         
         item {
             Box(Modifier.fillMaxWidth()) {
+                val locale = com.luneapp.official.ui.locale.LocalAppLocale.current
+                val monthYearText = if (locale.startsWith("zh")) {
+                    "${displayYear}年${displayMonth.number}月"
+                } else {
+                    "${monthDisplayName(displayMonth)} $displayYear"
+                }
                 Text(
-                    "${monthDisplayName(displayMonth)} $displayYear",
+                    monthYearText,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,  // Fix: Use semantic color
                     modifier = Modifier.align(Alignment.Center),
                 )
                 Row(
                     modifier = Modifier.align(Alignment.CenterStart),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
+                    if (!isCurrentMonth) {
+                        IconButton(onClick = { scope.launch { pagerState.animateScrollToPage(CENTER_PAGE) } }) {
+                            Icon(Icons.Outlined.Today, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        }
+                    }
                     IconButton(
                         onClick = { showLegendDialog = true },
                         modifier = Modifier.size(32.dp),
@@ -166,11 +194,6 @@ internal fun DetailCalendarView(
                     modifier = Modifier.align(Alignment.CenterEnd),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    if (!isCurrentMonth) {
-                        IconButton(onClick = { scope.launch { pagerState.animateScrollToPage(CENTER_PAGE) } }) {
-                            Icon(Icons.Outlined.Replay, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-                        }
-                    }
                     IconButton(
                         onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
                     ) {
@@ -199,6 +222,7 @@ internal fun DetailCalendarView(
                     ovulationPeakDates = ovulationPeakDates,
                     periodStartDates = periodStartDates,
                     periodEndDates = periodEndDates,
+                    datesWithHealthRecords = datesWithHealthRecords,
                     selectedDate = selectedDate,
                     onDateClick = { onSelectedDateChange(it) },
                     allRecords = allRecords,
@@ -293,19 +317,7 @@ internal fun DetailCalendarView(
                     }
                 }
             }
-            // Item 3.5: Log Full Health Details Button
-            item {
-                SmallSpacer(16)
-                androidx.compose.material3.OutlinedButton(
-                    onClick = {
-                        sheetViewModel.launchLogDay(date, onRefresh)
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = MaterialTheme.shapes.large
-                ) {
-                    Text(stringResource(R.string.detail_log_health_details))
-                }
-            }
+            // Item 3.5: Log Full Health Details Button - REMOVED
 
             // Item 4: Period action (only for today or past dates)
             val containingRecord = allRecords.find { r ->
@@ -418,6 +430,7 @@ internal fun DetailCalendarView(
 // Month Grid
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DetailMonthGrid(
     year: Int,
@@ -428,12 +441,14 @@ private fun DetailMonthGrid(
     ovulationPeakDates: Set<LocalDate>,
     periodStartDates: Set<LocalDate>,
     periodEndDates: Set<LocalDate>,
+    datesWithHealthRecords: Set<LocalDate>,
     selectedDate: LocalDate?,
     onDateClick: (LocalDate) -> Unit,
     allRecords: List<MenstrualRecord>,
     predictions: List<PredictedCycle>,
     phaseInfo: CyclePhaseInfo?,
 ) {
+    val sheetViewModel = com.luneapp.official.ui.pages.sheet.LocalSheetViewModel.current
     val firstDay = LocalDate(year, month, 1)
     val startOffset = firstDay.dayOfWeek.ordinal
     val days = daysInMonth(year, month)
@@ -484,6 +499,7 @@ private fun DetailMonthGrid(
                         val isPredicted = date in predictedPeriodDates && !isPeriod
                         val isPeriodStart = date in periodStartDates
                         val isPeriodEnd = date in periodEndDates
+                        val hasHealthRecord = date in datesWithHealthRecords
 
                         // Phase calculation for each day in grid to determine ovulation underline
                         val currentPhaseInfo = CyclePhaseInfo.getPhaseInfo(date, CycleState(allRecords, predictions, null, false), phaseInfo?.cycleLength ?: 28)
@@ -506,9 +522,31 @@ private fun DetailMonthGrid(
                             modifier = Modifier
                                 .weight(1f)
                                 .height(cellHeight)
-                                .clickable { onDateClick(date) },
+                                .combinedClickable(
+                                    onClick = { onDateClick(date) },
+                                    onLongClick = {
+                                        // Allow logging for today and past dates only
+                                        if (date <= today) {
+                                            sheetViewModel.launchLogDay(date) {}
+                                        }
+                                    }
+                                ),
                             contentAlignment = Alignment.TopCenter,
                         ) {
+                            // Health record indicator (dashed border)
+                            if (hasHealthRecord && !isSelected) {
+                                Box(
+                                    Modifier
+                                        .padding(top = 4.dp)
+                                        .size(32.dp)
+                                        .border(
+                                            width = 1.dp,
+                                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.4f),
+                                            shape = MaterialTheme.shapes.small
+                                        )
+                                )
+                            }
+                            
                             // Today background
                             if (isToday && !isSelected) {
                                 Box(modifier = cellBgModifier)

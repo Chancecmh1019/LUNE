@@ -263,19 +263,38 @@ class SheetViewModel(private val service: MenstrualService) : ViewModel() {
     /**
      * Show the log-day sheet for [targetDate] and save to whichever record
      * contains that date, or to the most recent record if none contains it.
-     * If no record exists at all, the sheet is still shown but nothing is saved.
+     * If no record exists at all, create a synthetic record for that date.
      */
     suspend fun logDayForAnyRecord(targetDate: LocalDate): Boolean? {
         val result = showLogDaySheet(targetDate) ?: return null
         val state = service.getCycleState()
-        val record = state.records
+        
+        // Try to find a record that contains this date
+        var record = state.records
             .filter { !it.isDeleted }
             .find { r ->
                 val rEnd = r.endDate ?: targetDate
                 targetDate in r.startDate..rEnd
             }
-            ?: state.records.filter { !it.isDeleted }.maxByOrNull { it.startDate }
-            ?: return false
+        
+        // If no containing record, try to find the most recent record
+        if (record == null) {
+            record = state.records.filter { !it.isDeleted }.maxByOrNull { it.startDate }
+        }
+        
+        // If still no record exists, create a synthetic single-day record for health logging only
+        if (record == null) {
+            // Use backfillPeriod to create a single-day record
+            val backfillResult = service.backfillPeriod(targetDate, targetDate)
+            if (backfillResult !is com.luneapp.official.domain.menstrual.AddRecordResult.Success) {
+                return false
+            }
+            // Reload state to get the newly created record
+            val newState = service.getCycleState()
+            record = newState.records.find { it.startDate == targetDate }
+            if (record == null) return false
+        }
+        
         val day = DailyRecord(
             date = targetDate,
             intensity = result.intensity,

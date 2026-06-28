@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Data Extraction Rules for Android 12+ (API 31+)
+    
+    This configuration controls data backup and transfer:
+    - Cloud Backup: DISABLED (no Google Drive backup on uninstall/reinstall)
+    - Device Transfer: ENABLED (direct device-to-device transfer via cable/WiFi)
+    
+    This means:
+    ✓ When transferring to a new phone, data will be transferred
+    ✗ When uninstalling and reinstalling, app will start fresh (no data restored)
+-->
+<data-extraction-rules>
+    <!-- Cloud backup rules (Google Drive) - DISABLED -->
+    <cloud-backup disableIfNoEncryptionCapabilities="true">
+        <!-- Exclude all data from cloud backup -->
+        <exclude domain="sharedpref" path="."/>
+        <exclude domain="file" path="."/>
+    </cloud-backup>
+    
+    <!-- Device-to-device transfer rules - ENABLED -->
+    <device-transfer>
+        <!-- Include DataStore preferences -->
+        <include domain="sharedpref" path="."/>
+        
+        <!-- Include all app files -->
+        <include domain="file" path="."/>
+    </device-transfer>
+</data-extraction-rules>

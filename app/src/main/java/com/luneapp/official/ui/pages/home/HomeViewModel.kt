@@ -51,10 +51,10 @@ class HomeViewModel(
     fun refresh() {
         viewModelScope.launch {
             val cycleLen = settings.getCycleLength()
-            val state = service.getCycleState(cycleLen)
+            userStatus = settings.getUserStatus()  // Load userStatus BEFORE getCycleState
+            val state = service.getCycleState(cycleLen, userStatus)  // Pass userStatus here!
             val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
 
-            userStatus = settings.getUserStatus()
             phaseInfo = CyclePhaseInfo.getPhaseInfo(today, state, cycleLen)
             cycleState = state
             isLoading = false

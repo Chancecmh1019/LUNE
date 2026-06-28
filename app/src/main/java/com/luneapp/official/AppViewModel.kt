@@ -88,11 +88,13 @@ class AppViewModel(
             notificationPermissionGranted = notificationService?.hasPermission() ?: false
 
             val disclaimerAccepted = settings.isDisclaimerAccepted()
-            val state = service.getCycleState(cycleLength)
+            val onboardingCompleted = settings.isOnboardingCompleted()
+            userStatus = settings.getUserStatus()
+            val state = service.getCycleState(cycleLength, userStatus)
             val hasData = state.records.isNotEmpty()
             startRoute = when {
                 !disclaimerAccepted -> DisclaimerRoute
-                !hasData -> OnboardingRoute
+                !onboardingCompleted && !hasData -> OnboardingRoute
                 else -> HomeRoute
             }
 
@@ -151,6 +153,7 @@ class AppViewModel(
         viewModelScope.launch {
             service.clearAllData()
             settings.setDisclaimerAccepted(false)
+            settings.setOnboardingCompleted(false)
             notificationService?.cancelAll()
         }
     }

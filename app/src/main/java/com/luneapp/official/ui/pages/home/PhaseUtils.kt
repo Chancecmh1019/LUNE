@@ -19,13 +19,31 @@ internal fun CyclePhase.displayName(): String = when (this) {
 }
 
 /**
-  * Day-aware label: shows "排卵日" (Ovulation day) on the peak day,
-  * otherwise falls back to the broader phase name (e.g. "排卵期")..
+  * Day-aware label with phase-specific day count.
+  * Shows "排卵日" (Ovulation day) on the peak day,
+  * otherwise shows phase name with day count (e.g. "濾泡期 第3天").
  */
 @Composable
-internal fun CyclePhaseInfo.dayLabel(): String =
-    if (isOvulationPeakDay) stringResource(R.string.detail_ovulation_day)
-    else phase.displayName()
+internal fun CyclePhaseInfo.dayLabel(): String {
+    if (isOvulationPeakDay) return stringResource(R.string.detail_ovulation_day)
+    
+    // Calculate day within current phase
+    val phaseStart = phaseStartDay(phase)
+    val dayInPhase = (dayInCycle - phaseStart + 1).coerceAtLeast(1)
+    
+    // Calculate phase length
+    val nextPhase = when (phase) {
+        CyclePhase.MENSTRUAL -> CyclePhase.FOLLICULAR
+        CyclePhase.FOLLICULAR -> CyclePhase.OVULATION
+        CyclePhase.OVULATION -> CyclePhase.LUTEAL
+        CyclePhase.LUTEAL -> null  // Last phase in cycle
+    }
+    val phaseEnd = nextPhase?.let { phaseStartDay(it) - 1 } ?: cycleLength
+    val phaseLength = (phaseEnd - phaseStart + 1).coerceAtLeast(1)
+    
+    val phaseName = phase.displayName()
+    return stringResource(R.string.phase_day_label, phaseName, dayInPhase, phaseLength)
+}
 
 @Composable
 internal fun CyclePhase.description(): String = when (this) {

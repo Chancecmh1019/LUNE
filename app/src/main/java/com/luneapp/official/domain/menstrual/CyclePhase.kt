@@ -139,15 +139,27 @@ data class CyclePhaseInfo(
         CyclePhase.LUTEAL -> peakDayInCycle + 2
     }
 
-    /** Days until a given phase starts. Negative = already past, 0 = current phase. */
+    /** 
+     * Days until a given phase starts. 
+     * Negative = already past (days since end), 0 = current phase, Positive = future phase 
+     */
     fun daysUntilPhase(p: CyclePhase): Int {
         if (p == phase) return 0
         val startDay = phaseStartDay(p)
         return if (startDay > dayInCycle) {
+            // Future phase in current cycle
             startDay - dayInCycle
         } else {
-            // Phase already passed this cycle — show days until next cycle's occurrence
-            (cycleLength - dayInCycle) + startDay
+            // Phase already passed this cycle — return negative value
+            // to indicate how many days ago it ended
+            startDay - dayInCycle
         }
+    }
+    
+    /** Check if a phase is in the past for this cycle */
+    fun isPhasePast(p: CyclePhase): Boolean {
+        if (p == phase) return false
+        val startDay = phaseStartDay(p)
+        return startDay < dayInCycle
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Android Auto Backup configuration for LUNE
+    
+    This enables automatic backup and restore of app data when:
+    - User transfers to a new device (via Google account)
+    - User reinstalls the app
+    
+    Data is automatically cleared when:
+    - User uninstalls the app
+    - User clears app data in Settings
+    
+    For more info: https://developer.android.com/guide/topics/data/autobackup
+-->
+<full-backup-content>
+    <!-- Include DataStore preferences (user settings, records) -->
+    <include domain="sharedpref" path="."/>
+    
+    <!-- Include all app data files -->
+    <include domain="file" path="."/>
+</full-backup-content>

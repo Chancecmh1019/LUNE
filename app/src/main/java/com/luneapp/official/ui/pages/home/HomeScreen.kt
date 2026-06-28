@@ -19,6 +19,8 @@ import com.luneapp.official.domain.menstrual.AddRecordResult
 import com.luneapp.official.domain.menstrual.CyclePhaseInfo
 import com.luneapp.official.domain.menstrual.CycleState
 import com.luneapp.official.domain.menstrual.MenstrualService
+import com.luneapp.official.domain.menstrual.toConditionProfile
+import com.luneapp.official.domain.settings.UserStatus
 import com.luneapp.official.ui.components.DecorShape
 import com.luneapp.official.ui.components.SmallSpacer
 import com.luneapp.official.ui.components.SuccessOverlay
@@ -153,7 +155,7 @@ private fun HomeContent(
     homeMode: HomeMode,
     cycleState: CycleState,
     phaseInfo: CyclePhaseInfo?,
-    userStatus: com.luneapp.official.domain.settings.UserStatus,
+    userStatus: UserStatus,
     service: MenstrualService,
     onRefresh: () -> Unit,
     sheetViewModel: SheetViewModel,
@@ -185,6 +187,7 @@ private fun HomeContent(
                         state = cycleState,
                         phaseInfo = phaseInfo,
                         userStatus = userStatus,
+                        conditionProfile = userStatus.toConditionProfile(),
                         modifier = Modifier.padding(horizontal = 16.dp),
                     )
                 }

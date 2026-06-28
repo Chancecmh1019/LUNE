@@ -13,11 +13,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import com.luneapp.official.R
 import com.luneapp.official.domain.menstrual.BleedingType
 import com.luneapp.official.domain.menstrual.DailyRecord
@@ -35,26 +41,45 @@ fun LogDaySheet(
     onDismiss: () -> Unit,
     onSave: (Intensity?, Mood?, List<String>, String?, String?, String?, BleedingType) -> Unit,
 ) {
-    // Pre-fill with existing data if available
+    // Pre-fill with existing data if available, but start with no selection for new records
     var selectedIntensity by remember { mutableStateOf<Intensity?>(existingRecord?.intensity) }
     var selectedMood by remember { mutableStateOf<Mood?>(existingRecord?.mood) }
-    var selectedSymptoms by remember { mutableStateOf<Set<String>>(existingRecord?.symptoms?.toSet() ?: setOf()) }
+    var selectedSymptoms by remember { mutableStateOf(existingRecord?.symptoms?.toSet() ?: emptySet<String>()) }
     var notes by remember { mutableStateOf(existingRecord?.notes ?: "") }
     var medications by remember { mutableStateOf(existingRecord?.medications ?: "") }
     var clinicalNotes by remember { mutableStateOf(existingRecord?.clinicalNotes ?: "") }
-    var bleedingType by remember { mutableStateOf(existingRecord?.bleedingType ?: BleedingType.NORMAL) }
+    // Bleeding type defaults to null (no selection); only pre-fill if existing record has non-NORMAL type
+    var bleedingType by remember { 
+        mutableStateOf<BleedingType?>(
+            if (existingRecord != null && existingRecord.bleedingType != BleedingType.NORMAL) 
+                existingRecord.bleedingType 
+            else 
+                null
+        ) 
+    }
+
+    // Track if anything has changed
+    val hasChanges = selectedIntensity != existingRecord?.intensity ||
+        selectedMood != existingRecord?.mood ||
+        selectedSymptoms != (existingRecord?.symptoms?.toSet() ?: emptySet<String>()) ||
+        notes != (existingRecord?.notes ?: "") ||
+        medications != (existingRecord?.medications ?: "") ||
+        clinicalNotes != (existingRecord?.clinicalNotes ?: "") ||
+        (bleedingType ?: BleedingType.NORMAL) != (existingRecord?.bleedingType ?: BleedingType.NORMAL)
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.background,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
     ) {
-        Column(
-            Modifier
-                .padding(horizontal = 24.dp)
-                .padding(bottom = 24.dp)
-                .verticalScroll(rememberScrollState()),
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 24.dp),
+            ) {
             val title = if (targetDate != null) {
                 stringResource(R.string.record_date_title, targetDate.month.number, targetDate.day)
             } else {
@@ -102,47 +127,22 @@ fun LogDaySheet(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(10.dp))
-            Row(
-                modifier = Modifier.horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 listOf(
-                    BleedingType.NORMAL         to stringResource(R.string.bleeding_normal),
-                    BleedingType.SPOTTING       to stringResource(R.string.bleeding_spotting),
-                    BleedingType.ABNORMAL_HEAVY to stringResource(R.string.bleeding_abnormal),
+                    BleedingType.NORMAL to stringResource(R.string.bleeding_normal),
+                    BleedingType.SPOTTING to stringResource(R.string.bleeding_spotting),
+                    BleedingType.HEAVY to stringResource(R.string.bleeding_heavy),
+                    BleedingType.CLOTS to stringResource(R.string.bleeding_clots),
+                    BleedingType.PROLONGED to stringResource(R.string.bleeding_prolonged),
                 ).forEach { (value, label) ->
                     PillChip(
                         label    = label,
                         selected = bleedingType == value,
-                        onClick  = { bleedingType = value },
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(20.dp))
-
-            // ---------- Mood ----------
-            Text(
-                stringResource(R.string.record_mood),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.horizontalScroll(rememberScrollState()),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                listOf(
-                    Triple(Mood.HAPPY,    stringResource(R.string.mood_happy),    "🥰"),
-                    Triple(Mood.NEUTRAL,  stringResource(R.string.mood_neutral),  "😌"),
-                    Triple(Mood.SAD,      stringResource(R.string.mood_sad),      "🥺"),
-                    Triple(Mood.VERY_SAD, stringResource(R.string.mood_very_sad), "😭"),
-                ).forEach { (value, label, icon) ->
-                    IconOption(
-                        icon     = icon,
-                        label    = label,
-                        selected = selectedMood == value,
-                        onClick  = { selectedMood = if (selectedMood == value) null else value },
+                        onClick  = { bleedingType = if (bleedingType == value) null else value },
                     )
                 }
             }
@@ -156,25 +156,32 @@ fun LogDaySheet(
                 color = MaterialTheme.colorScheme.onBackground,
             )
             Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.horizontalScroll(rememberScrollState()),
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 listOf(
                     "cramps"           to stringResource(R.string.symptom_cramps),
                     "back_pain"        to stringResource(R.string.symptom_back_pain),
                     "headache"         to stringResource(R.string.symptom_headache),
-                    "breast_pain"      to stringResource(R.string.symptom_breast_pain),
+                    "breast_tenderness" to stringResource(R.string.symptom_breast_tenderness),
                     "fatigue"          to stringResource(R.string.symptom_fatigue),
-                    "hot_flash"        to stringResource(R.string.symptom_hot_flash),
-                    "pelvic_pain"      to stringResource(R.string.symptom_pelvic_pain),
-                    "nausea"           to stringResource(R.string.symptom_nausea),
                     "bloating"         to stringResource(R.string.symptom_bloating),
-                    "joint_pain"       to stringResource(R.string.symptom_joint_pain),
-                    "night_sweats"     to stringResource(R.string.symptom_night_sweats),
-                    "vaginal_dryness"  to stringResource(R.string.symptom_vaginal_dryness),
-                    "insomnia"         to stringResource(R.string.symptom_insomnia),
                     "mood_swings"      to stringResource(R.string.symptom_mood_swings),
+                    "nausea"           to stringResource(R.string.symptom_nausea),
+                    "diarrhea"         to stringResource(R.string.symptom_diarrhea),
+                    "constipation"     to stringResource(R.string.symptom_constipation),
+                    "acne"             to stringResource(R.string.symptom_acne),
+                    "anxiety"          to stringResource(R.string.symptom_anxiety),
+                    "depression"       to stringResource(R.string.symptom_depression),
+                    "irritability"     to stringResource(R.string.symptom_irritability),
+                    "insomnia"         to stringResource(R.string.symptom_insomnia),
+                    "hot_flashes"      to stringResource(R.string.symptom_hot_flashes),
+                    "night_sweats"     to stringResource(R.string.symptom_night_sweats),
+                    "dizziness"        to stringResource(R.string.symptom_dizziness),
+                    "food_cravings"    to stringResource(R.string.symptom_food_cravings),
+                    "joint_pain"       to stringResource(R.string.symptom_joint_pain),
                 ).forEach { (key, label) ->
                     PillChip(
                         label    = label,
@@ -202,7 +209,6 @@ fun LogDaySheet(
                 value = medications,
                 onValueChange = { medications = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(stringResource(R.string.record_medications_hint)) },
                 minLines = 1,
                 maxLines = 3,
                 shape = RoundedCornerShape(16.dp),
@@ -221,7 +227,6 @@ fun LogDaySheet(
                 value = clinicalNotes,
                 onValueChange = { clinicalNotes = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(stringResource(R.string.record_clinical_notes_hint)) },
                 minLines = 1,
                 maxLines = 4,
                 shape = RoundedCornerShape(16.dp),
@@ -240,30 +245,48 @@ fun LogDaySheet(
                 value = notes,
                 onValueChange = { notes = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(stringResource(R.string.record_notes_hint)) },
                 minLines = 2,
                 shape = RoundedCornerShape(16.dp),
             )
 
-            Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(100.dp)) // Extra space for floating button to not cover last content
+            }
 
-            PrimaryCta(
-                text = stringResource(R.string.record_save_btn),
-                onClick = {
-                    onSave(
-                        selectedIntensity,
-                        selectedMood,
-                        selectedSymptoms.toList(),
-                        notes.takeIf { it.isNotBlank() },
-                        medications.takeIf { it.isNotBlank() },
-                        clinicalNotes.takeIf { it.isNotBlank() },
-                        bleedingType,
-                    )
-                    // DO NOT call onDismiss() here - it will cancel the save!
-                    // The sheet will close automatically when _activeSheet becomes null
-                },
-            )
-            Spacer(Modifier.height(16.dp))
+            // Floating save button - only visible when there are changes
+            // This truly floats over the content
+            androidx.compose.animation.AnimatedVisibility(
+                visible = hasChanges,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = 24.dp, vertical = 24.dp),
+                enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
+                exit = slideOutVertically(targetOffsetY = { it }) + fadeOut(),
+            ) {
+                PrimaryCta(
+                    text = stringResource(R.string.record_save_btn),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(50))
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .then(
+                            Modifier
+                                .shadow(8.dp, RoundedCornerShape(50))
+                        ),
+                    onClick = {
+                        onSave(
+                            selectedIntensity,
+                            selectedMood,
+                            selectedSymptoms.toList(),
+                            notes.takeIf { it.isNotBlank() },
+                            medications.takeIf { it.isNotBlank() },
+                            clinicalNotes.takeIf { it.isNotBlank() },
+                            bleedingType ?: BleedingType.NORMAL, // Convert null to NORMAL when saving
+                        )
+                        // DO NOT call onDismiss() here - it will cancel the save!
+                        // The sheet will close automatically when _activeSheet becomes null
+                    },
+                )
+            }
         }
     }
 }

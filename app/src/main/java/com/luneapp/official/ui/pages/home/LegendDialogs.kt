@@ -46,7 +46,7 @@ internal fun ChartLegendDialog(onDismiss: () -> Unit) {
 
 @Composable
 internal fun CalendarLegendDialog(onDismiss: () -> Unit) {
-    val ovColor = Color(0xFF7C4DFF)
+    val ovColor = Color(0xFF8BA698)  // Match actual ovulation color in DetailCalendarView
     val periodColor = MaterialTheme.colorScheme.error
     AlertDialog(
         onDismissRequest = onDismiss,

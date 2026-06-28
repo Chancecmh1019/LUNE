@@ -24,6 +24,7 @@ import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
 import androidx.compose.ui.res.stringResource
 import com.luneapp.official.R
+import com.luneapp.official.domain.menstrual.toConditionProfile
 
 @Composable
 fun SettingsScreen(
@@ -64,36 +65,55 @@ fun SettingsScreen(
     var showExportDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val successMsg = stringResource(R.string.settings_backup_export_success)
+    val exportSuccessMsg = stringResource(R.string.settings_backup_export_success)
+    val importSuccessMsg = stringResource(R.string.settings_backup_import_success)
+    
+    // Handle JSON backup status (both export and import)
     LaunchedEffect(jsonBackupStatus) {
-        if (jsonBackupStatus is ExportStatus.Success) {
-            snackbarHostState.showSnackbar(successMsg)
-            onResetJsonBackupStatus()
+        when (jsonBackupStatus) {
+            is ExportStatus.Success -> {
+                // Check if it's export or import based on message content
+                val msg = if (jsonBackupStatus.location.contains("Imported")) {
+                    importSuccessMsg
+                } else {
+                    exportSuccessMsg
+                }
+                snackbarHostState.showSnackbar(msg)
+                onResetJsonBackupStatus()
+            }
+            is ExportStatus.Failure -> {
+                snackbarHostState.showSnackbar(jsonBackupStatus.message)
+                onResetJsonBackupStatus()
+            }
+            else -> {}
         }
     }
 
-    Column(
+    Box(
         Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 24.dp)
-            .padding(top = 48.dp, bottom = 24.dp),
     ) {
-        // Top bar
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onBack, modifier = Modifier.size(40.dp)) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        Column(
+            Modifier
+                .fillMaxSize()
+                .safeDrawingPadding()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp)
+                .padding(top = 48.dp, bottom = 24.dp),
+        ) {
+            // Top bar
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack, modifier = Modifier.size(40.dp)) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Spacer(Modifier.weight(1f))
+                Text(stringResource(R.string.settings_title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.weight(1f))
+                Box(Modifier.size(40.dp))
             }
-            Spacer(Modifier.weight(1f))
-            Text(stringResource(R.string.settings_title), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Spacer(Modifier.weight(1f))
-            Box(Modifier.size(40.dp))
-        }
 
-        SnackbarHost(hostState = snackbarHostState)
-
-        Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(32.dp))
 
         // Display Mode ??icon toggle
         SectionLabel(stringResource(R.string.settings_display_mode))
@@ -125,7 +145,10 @@ fun SettingsScreen(
 
         Spacer(Modifier.height(24.dp))
 
-        if (!userStatus.isIrregular) {
+        // Only show cycle/period settings if predictions are enabled
+        // Users with predictionsEnabled=false (postpartum, oncology) don't have predictable cycles
+        val profile = userStatus.toConditionProfile()
+        if (profile.predictionsEnabled) {
             // ?? Period Duration ??display only, tap to edit ??
             SettingsItem(
                 label = stringResource(R.string.settings_period_duration),
@@ -170,19 +193,47 @@ fun SettingsScreen(
         SectionLabel(stringResource(R.string.settings_backup_title))
         Spacer(Modifier.height(12.dp))
         
-        SettingsItem(
-            label = stringResource(R.string.settings_backup_export),
-            value = stringResource(R.string.settings_backup_export_desc),
+        Surface(
             onClick = { onExportJson() },
-        )
+            tonalElevation = 1.dp,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Column(Modifier.padding(20.dp)) {
+                Text(
+                    stringResource(R.string.settings_backup_export),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    stringResource(R.string.settings_backup_export_desc),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
         
         Spacer(Modifier.height(12.dp))
         
-        SettingsItem(
-            label = stringResource(R.string.settings_backup_import),
-            value = stringResource(R.string.settings_backup_import_desc),
+        Surface(
             onClick = { jsonPicker.launch("application/json") },
-        )
+            tonalElevation = 1.dp,
+            shape = MaterialTheme.shapes.large,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Column(Modifier.padding(20.dp)) {
+                Text(
+                    stringResource(R.string.settings_backup_import),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    stringResource(R.string.settings_backup_import_desc),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
 
         Spacer(Modifier.height(24.dp))
 
@@ -314,6 +365,16 @@ fun SettingsScreen(
         )
 
         Spacer(Modifier.height(16.dp))
+    }
+
+        // SnackbarHost positioned at the bottom
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .safeDrawingPadding()
+                .padding(16.dp)
+        )
     }
 
     // Dialogs

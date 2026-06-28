@@ -52,9 +52,14 @@ internal fun PhaseExplanationSheet(
 
             CyclePhase.entries.forEach { phase ->
                 val isCurrent = phase == phaseInfo.phase
+                val isPast = phaseInfo.isPhasePast(phase)
                 val daysUntil = phaseInfo.daysUntilPhase(phase)
-                val timingLabel = if (isCurrent) stringResource(R.string.phase_now)
-                                  else stringResource(R.string.phase_in_days, daysUntil)
+                
+                val timingLabel = when {
+                    isCurrent -> stringResource(R.string.phase_now)
+                    isPast -> stringResource(R.string.phase_passed)
+                    else -> stringResource(R.string.phase_in_days, daysUntil)
+                }
 
                 Surface(
                     tonalElevation = if (isCurrent) 3.dp else 0.dp,
@@ -67,7 +72,7 @@ internal fun PhaseExplanationSheet(
                     ) {
                         Surface(
                             modifier = Modifier.size(24.dp),
-                            color = phase.color(),
+                            color = phase.color().copy(alpha = if (isPast) 0.3f else 1f),
                             shape = phase.shape(),
                         ) { }
                         SmallSpacer(12)
@@ -76,20 +81,27 @@ internal fun PhaseExplanationSheet(
                                 phase.displayName(),
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isPast) MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                                        else LocalContentColor.current,
                             )
                             SmallSpacer(2)
                             Text(
                                 phase.description(),
                                 style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                                    alpha = if (isPast) 0.5f else 1f
+                                ),
                             )
                         }
                         SmallSpacer(8)
                         Text(
                             timingLabel,
                             style = MaterialTheme.typography.labelMedium,
-                            color = if (isCurrent) phase.color()
-                                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = when {
+                                isCurrent -> phase.color()
+                                isPast -> MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                                else -> MaterialTheme.colorScheme.onSurfaceVariant
+                            },
                         )
                     }
                 }

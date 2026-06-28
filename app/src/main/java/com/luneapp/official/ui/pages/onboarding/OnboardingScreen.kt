@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.until
+import com.luneapp.official.domain.menstrual.toConditionProfile
 
 /** Visual position of each onboarding step (used for the indicator and back nav). */
 internal enum class OnboardingStep {
@@ -87,7 +88,9 @@ fun OnboardingScreen(
             if (healthSyncManager != null) add(OnboardingStep.HealthSync)
             add(OnboardingStep.UserStatus)
             if (!existingHasActivePeriod) add(OnboardingStep.PeriodStatus)
-            if (!userStatus.isIrregular) add(OnboardingStep.CycleSettings)
+            // Only show cycle settings if predictions are enabled (postpartum/oncology don't need this)
+            val profile = userStatus.toConditionProfile()
+            if (profile.predictionsEnabled) add(OnboardingStep.CycleSettings)
             add(OnboardingStep.Notifications)
             add(OnboardingStep.AllSet)
         }

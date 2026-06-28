@@ -42,6 +42,7 @@ fun NotificationSettingsScreen(
         Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .safeDrawingPadding()
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp)
             .padding(top = 48.dp, bottom = 32.dp),

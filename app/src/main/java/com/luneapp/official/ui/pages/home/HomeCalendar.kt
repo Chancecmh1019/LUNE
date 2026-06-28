@@ -17,9 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import com.luneapp.official.domain.menstrual.ConditionProfile
 import com.luneapp.official.domain.menstrual.CyclePhaseInfo
 import com.luneapp.official.domain.menstrual.CycleState
 import com.luneapp.official.domain.menstrual.MenstrualRecord
+import com.luneapp.official.domain.menstrual.toConditionProfile
+import com.luneapp.official.domain.settings.UserStatus
 import com.luneapp.official.ui.components.DayType
 import com.luneapp.official.ui.components.DecorShape
 import com.luneapp.official.ui.components.GrowSpacer
@@ -43,7 +46,8 @@ import kotlin.time.Clock
 internal fun HomeCalendar(
     state: CycleState,
     phaseInfo: CyclePhaseInfo?,
-    userStatus: com.luneapp.official.domain.settings.UserStatus = com.luneapp.official.domain.settings.UserStatus.REGULAR,
+    userStatus: UserStatus = UserStatus.REGULAR,
+    conditionProfile: ConditionProfile = userStatus.toConditionProfile(),
     modifier: Modifier = Modifier,
 ) {
     val defaultCycleLength = phaseInfo?.cycleLength ?: 28
@@ -86,6 +90,7 @@ internal fun HomeCalendar(
                     inPeriod = inPeriod,
                     dayCount = dayCount,
                     userStatus = userStatus,
+                    conditionProfile = conditionProfile,
                     onClick = { showPhaseSheet = true },
                 )
             }
@@ -140,12 +145,14 @@ private fun HeroCountdown(
     phaseInfo: CyclePhaseInfo,
     inPeriod: Boolean,
     dayCount: Int?,
-    userStatus: com.luneapp.official.domain.settings.UserStatus,
+    userStatus: UserStatus,
+    conditionProfile: ConditionProfile,
     onClick: () -> Unit,
 ) {
     val phase = phaseInfo.phase
     val phaseColor = phase.color()
     val dueToday = phaseInfo.daysUntilNextPeriod <= 0 && !inPeriod
+    val showCountdown = conditionProfile.predictionsEnabled && !userStatus.isIrregular
 
     Surface(
         onClick = onClick,
@@ -178,7 +185,7 @@ private fun HeroCountdown(
                         fontWeight = FontWeight.Black,
                     )
                 }
-                userStatus.isIrregular -> {
+                !showCountdown -> {
                     Text(
                         stringResource(R.string.home_day_n, dayCount ?: 0),
                         style = MaterialTheme.typography.displayMedium,
@@ -215,7 +222,7 @@ private fun HeroCountdown(
             Text(
                 when {
                     inPeriod -> stringResource(R.string.home_in_period)
-                    userStatus.isIrregular -> stringResource(R.string.user_status_tracking_mode)
+                    !showCountdown -> stringResource(R.string.user_status_tracking_mode)
                     dueToday -> stringResource(R.string.home_hero_due_today)
                     else -> stringResource(R.string.home_next_period_starts)
                 },
@@ -254,7 +261,15 @@ private fun InfoColumn(
 @Composable
 private fun formatYearMonth(year: Int, month: Month): String {
     val monthName = monthDisplayName(month)
-    return "$monthName $year"
+    val locale = com.luneapp.official.ui.locale.LocalAppLocale.current
+    
+    // English: "January 2024"
+    // Chinese: "2024年1月"
+    return if (locale.startsWith("zh")) {
+        "${year}年${month.number}月"
+    } else {
+        "$monthName $year"
+    }
 }
 
 @Composable
@@ -264,8 +279,16 @@ private fun formatDateWithWeekday(date: LocalDate): String {
         chars("/")
         day()
     })
-    val weekday = weekdayName(date.dayOfWeek)
-    return "$formatted ($weekday)"
+    val weekday = weekday3Letter(date.dayOfWeek)
+    val locale = com.luneapp.official.ui.locale.LocalAppLocale.current
+    
+    // English: "12/25 Thu" (no parentheses)
+    // Chinese: "12/25（四）" (with parentheses)
+    return if (locale.startsWith("zh")) {
+        "$formatted（$weekday）"
+    } else {
+        "$formatted $weekday"
+    }
 }
 
 @Composable
@@ -293,6 +316,17 @@ private fun weekdayName(dayOfWeek: DayOfWeek): String = when (dayOfWeek) {
     DayOfWeek.FRIDAY -> stringResource(R.string.weekday_short_fri)
     DayOfWeek.SATURDAY -> stringResource(R.string.weekday_short_sat)
     DayOfWeek.SUNDAY -> stringResource(R.string.weekday_short_sun)
+}
+
+@Composable
+private fun weekday3Letter(dayOfWeek: DayOfWeek): String = when (dayOfWeek) {
+    DayOfWeek.MONDAY -> stringResource(R.string.weekday_3letter_mon)
+    DayOfWeek.TUESDAY -> stringResource(R.string.weekday_3letter_tue)
+    DayOfWeek.WEDNESDAY -> stringResource(R.string.weekday_3letter_wed)
+    DayOfWeek.THURSDAY -> stringResource(R.string.weekday_3letter_thu)
+    DayOfWeek.FRIDAY -> stringResource(R.string.weekday_3letter_fri)
+    DayOfWeek.SATURDAY -> stringResource(R.string.weekday_3letter_sat)
+    DayOfWeek.SUNDAY -> stringResource(R.string.weekday_3letter_sun)
 }
 
 private data class YearMonth(val year: Int, val month: Month)
@@ -359,10 +393,11 @@ private fun MonthBlock(
                             isPredictedPeriod || isNextPredicted -> periodLight
                             else -> MaterialTheme.colorScheme.surfaceVariant
                         }
+                        // Fix: Ensure text is visible on all backgrounds
                         val textColor = when {
-                            isToday -> Color.White
-                            isPeriod -> Color.White
-                            isPredictedPeriod || isNextPredicted -> Color.White
+                            isToday -> MaterialTheme.colorScheme.onPrimary
+                            isPeriod -> MaterialTheme.colorScheme.onError
+                            isPredictedPeriod || isNextPredicted -> MaterialTheme.colorScheme.onErrorContainer
                             isFuture -> onSurface.copy(alpha = 0.15f)
                             else -> onSurface.copy(alpha = 0.45f)
                         }

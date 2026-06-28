@@ -44,6 +44,7 @@ internal suspend fun commitOnboarding(
 ) {
     settings.setCycleLength(cycleLength)
     settings.setPeriodDuration(periodDuration)
+    settings.setOnboardingCompleted(true)  // Mark onboarding as completed
 
     when (entry) {
         is PeriodEntry.Active -> service.recordPeriodStart(entry.start)

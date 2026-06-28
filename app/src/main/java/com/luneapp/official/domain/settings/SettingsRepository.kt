@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import me.tatarka.inject.annotations.Inject
 
 private val DISCLAIMER_ACCEPTED = booleanPreferencesKey("disclaimer_accepted")
+private val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
 private val DARK_MODE = stringPreferencesKey("dark_mode")
 private val LANGUAGE = stringPreferencesKey("language")
 private val HOME_MODE = stringPreferencesKey("home_mode")
@@ -40,6 +41,13 @@ open class SettingsRepository(private val dataStore: DataStore<Preferences>) {
 
     suspend fun setDisclaimerAccepted(value: Boolean) {
         dataStore.edit { prefs -> prefs[DISCLAIMER_ACCEPTED] = value }
+    }
+
+    suspend fun isOnboardingCompleted(): Boolean =
+        dataStore.data.first()[ONBOARDING_COMPLETED] ?: false
+
+    suspend fun setOnboardingCompleted(value: Boolean) {
+        dataStore.edit { prefs -> prefs[ONBOARDING_COMPLETED] = value }
     }
 
     suspend fun getDarkMode(): AppDarkMode =

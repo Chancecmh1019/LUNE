@@ -17,8 +17,12 @@ enum class BleedingType {
     NORMAL,
     /** Intermenstrual spotting or light mid-cycle bleeding. */
     SPOTTING,
-    /** Heavier-than-usual or prolonged bleeding outside a typical period. */
-    ABNORMAL_HEAVY,
+    /** Heavier flow than usual. */
+    HEAVY,
+    /** Presence of blood clots. */
+    CLOTS,
+    /** Prolonged bleeding beyond typical period duration. */
+    PROLONGED,
 }
 
 /**
