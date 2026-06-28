@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.luneapp.official.ExportStatus
 import com.luneapp.official.domain.health.HealthSyncManager
 import com.luneapp.official.ui.components.PrimaryCta
 import com.luneapp.official.ui.components.SmallSpacer
@@ -46,9 +47,35 @@ internal fun HealthSyncStep(
     onSkip: () -> Unit,
     onBack: () -> Unit,
     onRestoreFromJson: (android.net.Uri) -> Unit = {},
+    jsonBackupStatus: ExportStatus = ExportStatus.Idle,
+    onResetJsonBackupStatus: () -> Unit = {},
 ) {
     val scope = rememberCoroutineScope()
     var uiState by remember { mutableStateOf<HealthSyncUi>(HealthSyncUi.Idle) }
+
+    // Monitor JSON backup status for restore feature
+    LaunchedEffect(jsonBackupStatus) {
+        when (jsonBackupStatus) {
+            is ExportStatus.Success -> {
+                if (jsonBackupStatus.location.contains("Imported")) {
+                    // Extract count from message like "Imported 91 records"
+                    val count = jsonBackupStatus.location.split(" ").getOrNull(1)?.toIntOrNull() ?: 0
+                    if (count > 0) {
+                        uiState = HealthSyncUi.Done(count)
+                    }
+                }
+                onResetJsonBackupStatus()
+            }
+            is ExportStatus.Failure -> {
+                uiState = HealthSyncUi.Failed
+                onResetJsonBackupStatus()
+            }
+            is ExportStatus.InProgress -> {
+                uiState = HealthSyncUi.Syncing
+            }
+            else -> {}
+        }
+    }
 
     fun runConnect() {
         if (uiState == HealthSyncUi.Syncing) return

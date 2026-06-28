@@ -92,9 +92,9 @@ fun App(component: AppComponent, context: Context) {
                                 },
                                 onRestoreFromJson = { uri ->
                                     viewModel.importJsonBackup(uri)
-                                    // Normally you might want to show a toast or wait for it to finish,
-                                    // but for brevity we let the ViewModel update state silently.
                                 },
+                                jsonBackupStatus = viewModel.jsonBackupStatus,
+                                onResetJsonBackupStatus = { viewModel.resetJsonBackupStatus() },
                             )
                         }
 

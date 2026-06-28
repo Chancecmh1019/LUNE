@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.until
+import com.luneapp.official.ExportStatus
 import com.luneapp.official.domain.menstrual.toConditionProfile
 
 /** Visual position of each onboarding step (used for the indicator and back nav). */
@@ -53,6 +54,8 @@ fun OnboardingScreen(
     onComplete: () -> Unit,
     /** Callback invoked when the user picks a JSON file URI to restore from. */
     onRestoreFromJson: (android.net.Uri) -> Unit = {},
+    jsonBackupStatus: ExportStatus = ExportStatus.Idle,
+    onResetJsonBackupStatus: () -> Unit = {},
 ) {
     val scope = rememberCoroutineScope()
 
@@ -173,6 +176,8 @@ fun OnboardingScreen(
                         onSkip = { goNext() },
                         onBack = { goBack() },
                         onRestoreFromJson = onRestoreFromJson,
+                        jsonBackupStatus = jsonBackupStatus,
+                        onResetJsonBackupStatus = onResetJsonBackupStatus,
                     )
 
                     OnboardingStep.UserStatus -> UserStatusStep(
